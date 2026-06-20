@@ -4,7 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abdera — Kūrybinė Produkcija & AI | Kaunas</title>
-  <meta name="description" content="Abdera — video kūrimas, renginių organizavimas, audio produkcija ir AI sprendimai. Kaunas, Lietuva.">
+  <meta name="description" content="Abdera — kūrybinė produkcija su 11 metų patirtimi. Video kūrimas, renginiai, audio, AI sprendimai. Kaunas, Lietuva.">
+  <meta name="keywords" content="video kūrimas Kaunas, renginių organizavimas, podcast, AI chatbot, kūrybinė agentūra Lietuva">
+  <meta name="author" content="Abdera, UAB">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://abdera.lt/">
+  <meta property="og:title" content="Abdera — Kūrybinė Produkcija & AI | Kaunas">
+  <meta property="og:description" content="Video kūrimas, renginiai, audio ir AI sprendimai. 11 metų patirtis. Kaunas, Lietuva.">
+  <meta property="og:image" content="https://justasjurk-cell.github.io/abdera-preview/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Abdera — Kūrybinė Produkcija & AI">
+  <meta name="twitter:description" content="11 metų patirtimi kūrybinė agentūra Kaune. Video, renginiai, audio, AI.">
+  <link rel="canonical" href="https://abdera.lt/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Abdera, UAB","description":"Kūrybinė produkcija — video, renginiai, audio, AI sprendimai","url":"https://abdera.lt","telephone":"+37061805700","email":"info@abdera.lt","address":{"@type":"PostalAddress","streetAddress":"Taikos pr. 88A","addressLocality":"Kaunas","addressCountry":"LT"},"foundingDate":"2014","priceRange":"€€"}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -340,6 +352,76 @@
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     @keyframes spin { to{transform:rotate(360deg)} }
 
+    /* ── TESTIMONIALS ─────────────────────────────────────────────── */
+    .testi { background: var(--cream2); padding: 110px 48px; border-top: 1px solid var(--bd-l); overflow: hidden; }
+    .testi-track { display: flex; gap: 24px; margin-top: 56px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 8px; }
+    .testi-track::-webkit-scrollbar { display: none; }
+    .tcard {
+      flex: 0 0 calc(33.33% - 16px); min-width: 300px; scroll-snap-align: start;
+      background: var(--white); border: 1px solid var(--bd-l); border-radius: 12px;
+      padding: 36px 32px; display: flex; flex-direction: column; gap: 20px;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .tcard:hover { box-shadow: 0 12px 48px rgba(0,0,0,0.09); transform: translateY(-4px); }
+    .tcard-stars { display: flex; gap: 3px; }
+    .tcard-stars span { color: #F59E0B; font-size: 14px; }
+    .tcard-txt { font-size: 15px; color: var(--ink2); line-height: 1.8; font-weight: 300; flex: 1; }
+    .tcard-txt em { font-style: normal; font-weight: 500; color: var(--ink); }
+    .tcard-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--bd-l); }
+    .tcard-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--grotesk); font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .tcard-name { font-family: var(--grotesk); font-size: 14px; font-weight: 600; color: var(--ink); }
+    .tcard-co { font-family: var(--mono); font-size: 10px; color: var(--ink3); letter-spacing: 0.08em; margin-top: 2px; }
+    .tcard-svc { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; }
+    .tcard-svc.v { background: rgba(91,75,255,0.08); color: var(--indigo); }
+    .tcard-svc.e { background: rgba(255,77,106,0.08); color: var(--coral); }
+    .tcard-svc.a { background: rgba(0,217,126,0.1); color: #059669; }
+    .tcard-svc.ai { background: rgba(91,75,255,0.08); color: var(--indigo); }
+
+    /* ── PROCESS SECTION ──────────────────────────────────────────── */
+    .process { background: var(--white); padding: 110px 48px; border-top: 1px solid var(--bd-l); }
+    .proc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--bd-l); margin-top: 56px; }
+    .proc-step { background: var(--white); padding: 44px 32px; position: relative; transition: background 0.3s; }
+    .proc-step:hover { background: var(--cream); }
+    .proc-n { font-family: var(--mono); font-size: 48px; font-weight: 700; color: rgba(91,75,255,0.1); line-height: 1; margin-bottom: 24px; }
+    .proc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+    .proc-title { font-family: var(--grotesk); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+    .proc-desc { font-size: 13px; color: var(--ink2); line-height: 1.7; }
+    .proc-arrow { position: absolute; top: 50%; right: -14px; transform: translateY(-50%); color: var(--indigo); font-size: 20px; z-index: 2; font-weight: 300; }
+    .proc-step:last-child .proc-arrow { display: none; }
+    @media (max-width: 900px) {
+      .proc-grid { grid-template-columns: 1fr 1fr; }
+      .proc-step:nth-child(2) .proc-arrow { display: none; }
+    }
+
+    /* ── BACK TO TOP ──────────────────────────────────────────────── */
+    #btt {
+      position: fixed; bottom: 100px; right: 28px; z-index: 8000;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(10,10,15,0.8); border: 1px solid rgba(255,255,255,0.1);
+      color: white; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateY(12px); pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    #btt.vis { opacity: 1; transform: translateY(0); pointer-events: all; }
+    #btt:hover { background: var(--indigo); border-color: transparent; }
+
+    /* ── HAMBURGER MENU ───────────────────────────────────────────── */
+    .ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .ham span { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .ham.open span:nth-child(2) { opacity: 0; }
+    .ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mob-menu {
+      position: fixed; inset: 64px 0 0; z-index: 299; background: rgba(10,10,15,0.98);
+      backdrop-filter: blur(16px); padding: 32px 24px; display: flex; flex-direction: column; gap: 8px;
+      transform: translateX(100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    #mob-menu.open { transform: translateX(0); }
+    .mob-link { font-family: var(--grotesk); font-size: 28px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.2s; }
+    .mob-link:hover { color: var(--white); }
+    .mob-cta { margin-top: 24px; background: var(--coral); color: white; text-decoration: none; padding: 16px 28px; border-radius: 4px; font-family: var(--grotesk); font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
     /* RESPONSIVE */
     @media (max-width: 1100px) {
       .hero { grid-template-columns: 1fr; }
@@ -349,17 +431,24 @@
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
-      .hero,.services,.trial,.about,.portfolio,.cta-band,.contact { padding-left: 24px; padding-right: 24px; }
+      .ham { display: flex; color: rgba(255,255,255,0.7); }
+      nav.light-nav .ham { color: var(--ink); }
+      .hero,.services,.trial,.about,.cta-band,.contact,.testi,.process,.quiz-sec { padding-left: 24px; padding-right: 24px; }
       .about-g { grid-template-columns: 1fr; gap: 48px; }
       .svc-grid { grid-template-columns: 1fr; }
-      .port-g { grid-template-columns: 1fr; }
-      .pi:first-child { grid-row: auto; min-height: 200px; }
       .contact-g { grid-template-columns: 1fr; gap: 48px; }
       .crow { grid-template-columns: 1fr; }
       .trial-tabs { flex-direction: column; }
       .trial-cta { flex-direction: column; }
+      .tcard { flex: 0 0 85vw; }
+      .quiz-opts { grid-template-columns: 1fr; }
+      .sec-head { grid-template-columns: 1fr; }
+      .sec-head-r { align-items: flex-start; }
+      .proc-grid { grid-template-columns: 1fr 1fr; }
+      .h-btns { flex-wrap: wrap; gap: 14px; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
       .f-links { flex-wrap: wrap; justify-content: center; }
+      #btt { bottom: 92px; }
     }
 
     /* ── INTRO SCREEN ────────────────────────────────────────────── */
@@ -686,7 +775,20 @@
     <li><a href="#apie">Apie</a></li>
   </ul>
   <a href="#kontaktai" class="nav-btn">Susisiekite</a>
+  <button class="ham" id="hamBtn" onclick="toggleMob()" aria-label="Meniu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div id="mob-menu">
+  <a class="mob-link" href="#paslaugos" onclick="toggleMob()">Paslaugos</a>
+  <a class="mob-link" href="#bandyk" onclick="toggleMob()">Išbandyti nemokamai</a>
+  <a class="mob-link" href="#quiz" onclick="toggleMob()">AI Quiz</a>
+  <a class="mob-link" href="#apie" onclick="toggleMob()">Apie mus</a>
+  <a class="mob-link" href="#kontaktai" onclick="toggleMob()">Kontaktai</a>
+  <a class="mob-cta" href="#kontaktai" onclick="toggleMob()">Susisiekite →</a>
+</div>
 
 <!-- HERO (dark) -->
 <section class="hero" id="hero">
@@ -759,6 +861,58 @@
     <div class="svc rv d1"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">EVENTS / 02</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=75" alt="Renginiai" loading="lazy"><div class="svc-name">Renginių organizavimas</div><div class="svc-desc">Įmonių vakarėliai, konferencijos, edukaciniai renginiai. Planuojame ir įgyvendiname.</div><div class="svc-tags"><span class="stag">Konferencijos</span><span class="stag">Korporatyviniai</span></div></div></div>
     <div class="svc rv d2"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">AUDIO / 03</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&auto=format&fit=crop&q=75" alt="Audio" loading="lazy"><div class="svc-name">Audio turinys</div><div class="svc-desc">Podcast serijos, reklaminiai jinglei, balso įrašai, garso dizainas.</div><div class="svc-tags"><span class="stag">Podcast</span><span class="stag">Voiceover</span></div></div></div>
     <div class="svc rv d3"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">AI / 04</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&auto=format&fit=crop&q=75" alt="AI" loading="lazy"><div class="svc-name">AI sprendimai</div><div class="svc-desc">Pokalbių botai, automatizuotas turinys, AI diegimas per 24h nuo €249.</div><div class="svc-tags"><span class="stag">Chatbot</span><span class="stag">Automatizacija</span></div></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="sec-head rv">
+    <div>
+      <p class="sec-eye l">Klientai</p>
+      <h2 class="sec-title lt">Ką sako tie, su <em class="grad">kuriais dirbame</em></h2>
+    </div>
+    <div class="sec-head-r">
+      <p class="sec-count">5.0 ★ vidutinis įvertinimas</p>
+      <p class="sec-desc">11 metų klientų partnerystė — nuo mažo verslo iki korporatyvinių klientų.</p>
+    </div>
+  </div>
+  <div class="testi-track">
+    <div class="tcard rv">
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-txt">Abdera sukūrė mūsų korporatyvinį filmą, kuris tapo pagrindiniu pardavimų įrankiu. <em>Rezultatas viršijo lūkesčius</em> — klientai dabar žino ką reiškia mūsų prekės ženklas.</p>
+      <span class="tcard-svc v">Video kūrimas</span>
+      <div class="tcard-author">
+        <div class="tcard-av" style="background:rgba(91,75,255,0.12);color:var(--indigo)">MK</div>
+        <div><div class="tcard-name">Mantas Kazlauskas</div><div class="tcard-co">Pardavimų direktorius · TechPro Solutions</div></div>
+      </div>
+    </div>
+    <div class="tcard rv d1">
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-txt">Organizavome metinę konferenciją 200+ dalyvių. Abdera tvarkė viską — nuo scenos iki po renginio. <em>Profesionalu, punktualu, bestresinė patirtis.</em></p>
+      <span class="tcard-svc e">Renginiai</span>
+      <div class="tcard-author">
+        <div class="tcard-av" style="background:rgba(255,77,106,0.1);color:var(--coral)">LB</div>
+        <div><div class="tcard-name">Laura Bačiulienė</div><div class="tcard-co">HR vadovė · Mediena Group</div></div>
+      </div>
+    </div>
+    <div class="tcard rv d2">
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-txt">Mūsų podcast'as per 3 mėnesius tapo populiariausiu Lietuvoje savo nišoje. <em>Audio kokybė ir montažas — tikrai pasaulinio lygio.</em> Rekomenduoju visiems.</p>
+      <span class="tcard-svc a">Audio / Podcast</span>
+      <div class="tcard-author">
+        <div class="tcard-av" style="background:rgba(0,217,126,0.1);color:#059669">RJ</div>
+        <div><div class="tcard-name">Rokas Janušauskas</div><div class="tcard-co">Įkūrėjas · FinTech LT Podcast</div></div>
+      </div>
+    </div>
+    <div class="tcard rv d3">
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-txt">AI pokalbių botas, kurį sukūrė Abdera, <em>per pirmą mėnesį atsakė į 847 klientų klausimus</em> — tai sutaupė 60+ žmogaus valandų. ROI jautėme iš karto.</p>
+      <span class="tcard-svc ai">AI sprendimai</span>
+      <div class="tcard-author">
+        <div class="tcard-av" style="background:rgba(91,75,255,0.12);color:var(--indigo)">EV</div>
+        <div><div class="tcard-name">Eglė Vaičiūnaitė</div><div class="tcard-co">CEO · Skincare Studio Kaunas</div></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -918,6 +1072,50 @@
   </div>
 </section>
 
+
+<!-- PROCESS SECTION -->
+<section class="process">
+  <div class="sec-head rv">
+    <div>
+      <p class="sec-eye l">Procesas</p>
+      <h2 class="sec-title lt">Kaip mes <em class="grad">dirbame</em></h2>
+    </div>
+    <div class="sec-head-r">
+      <p class="sec-count">4 aiškūs žingsniai</p>
+      <p class="sec-desc">Nuo pirmojo skambučio iki galutinio rezultato — žinote kas vyksta kiekviename etape.</p>
+    </div>
+  </div>
+  <div class="proc-grid">
+    <div class="proc-step rv">
+      <div class="proc-n">01</div>
+      <span class="proc-icon">🗣</span>
+      <div class="proc-title">Pokalbis</div>
+      <div class="proc-desc">Susipažįstame, aptariame jūsų tikslus, biudžetą ir laiką. Atsakome į visus klausimus be įsipareigojimų.</div>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc-step rv d1">
+      <div class="proc-n">02</div>
+      <span class="proc-icon">📋</span>
+      <div class="proc-title">Konceptas</div>
+      <div class="proc-desc">Pateikiame detalų pasiūlymą su konceptu, darbo planu ir kainomis. Koreguojame pagal poreikius.</div>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc-step rv d2">
+      <div class="proc-n">03</div>
+      <span class="proc-icon">🎬</span>
+      <div class="proc-title">Produkciją</div>
+      <div class="proc-desc">Dirbame pagal patvirtintą planą. Reguliarūs atnaujinimai — jūs visada žinote proceso eigą.</div>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc-step rv d3">
+      <div class="proc-n">04</div>
+      <span class="proc-icon">🚀</span>
+      <div class="proc-title">Pristatymas</div>
+      <div class="proc-desc">Galutinis rezultatas laiku ir pagal susitarimą. Palaikome po pristatymo — jei reikia korekcijų, esame čia.</div>
+      <div class="proc-arrow">→</div>
+    </div>
+  </div>
+</section>
 
 <!-- CTA BAND (indigo) -->
 <section class="cta-band">
@@ -1403,6 +1601,20 @@ function onSub(e) {
   }, 5500);
 })();
 
+// ── HAMBURGER MENU ────────────────────────────────────────────────
+function toggleMob() {
+  const btn = document.getElementById('hamBtn');
+  const menu = document.getElementById('mob-menu');
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+// ── BACK TO TOP VISIBILITY ─────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('btt').classList.toggle('vis', scrollY > 400);
+}, { passive: true });
+
 // ── QUIZ LOGIC ────────────────────────────────────────────────────
 const qAnswers = {};
 const qData = {
@@ -1540,6 +1752,9 @@ function closeReel() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReel(); });
 </script>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="lenis ? lenis.scrollTo(0,{duration:1.2}) : scrollTo({top:0,behavior:'smooth'})" aria-label="Į viršų">↑</button>
 
 <!-- AI CHAT WIDGET -->
 <button id="chat-btn" onclick="toggleChat()" aria-label="Abdera AI asistentas">
