@@ -137,7 +137,12 @@
     .sec-title.dk { color: var(--white); }
     .sec-title.lt { color: var(--ink); }
     .sec-title em { font-style: italic; font-weight: 300; }
-    .sec-head { margin-bottom: 56px; }
+    .sec-head { margin-bottom: 56px; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:end; }
+    .sec-desc { font-size:15px; font-weight:300; line-height:1.8; color:var(--ink2); max-width:380px; margin-left:auto; }
+    .sec-desc.dk { color:rgba(255,255,255,0.45); }
+    .sec-head-r { display:flex; flex-direction:column; align-items:flex-end; gap:16px; }
+    .sec-count { font-family:var(--mono); font-size:10px; letter-spacing:0.18em; color:var(--ink3); text-transform:uppercase; }
+    .sec-count.dk { color:rgba(255,255,255,0.2); }
     .svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--bd-l); }
     .svc { background: var(--white); padding: 44px 32px; position: relative; overflow: hidden; cursor: default; transition: box-shadow 0.3s; }
     .svc:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.1); }
@@ -168,7 +173,7 @@
       border-top: 1px solid var(--bd-l);
       border-bottom: 1px solid var(--bd-l);
     }
-    .trial-inner { max-width: 780px; margin: 0 auto; }
+    .trial-inner { max-width: 860px; margin: 0 auto; }
     .trial-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(255,77,106,0.08); border: 1px solid rgba(255,77,106,0.2);
@@ -367,7 +372,6 @@
     <li><a href="#paslaugos">Paslaugos</a></li>
     <li><a href="#bandyk">Išbandyti</a></li>
     <li><a href="#apie">Apie</a></li>
-    <li><a href="#projektai">Projektai</a></li>
   </ul>
   <a href="#kontaktai" class="nav-btn">Susisiekite</a>
 </nav>
@@ -425,8 +429,14 @@
   </div>
   <div class="bg-ltr bgl-svc" data-par="0.22">KŪRYBA</div>
   <div class="sec-head rv" style="position:relative;z-index:1">
-    <p class="sec-eye l">Paslaugos</p>
-    <h2 class="sec-title lt">Ką mes <em class="grad">kuriame</em></h2>
+    <div>
+      <p class="sec-eye l">Paslaugos</p>
+      <h2 class="sec-title lt">Ką mes <em class="grad">kuriame</em></h2>
+    </div>
+    <div class="sec-head-r">
+      <p class="sec-count">04 paslaugų sritys</p>
+      <p class="sec-desc">Nuo koncepcijos iki galutinio rezultato — dirbame su verslu, kuris nori būti matomas ir girdimas. Kiekvienas projektas yra unikalus.</p>
+    </div>
   </div>
   <div class="svc-grid" style="position:relative;z-index:1">
     <div class="svc rv"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">VIDEO / 01</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1598387993441-a364f854cbc4?w=600&auto=format&fit=crop&q=75" alt="Video" loading="lazy"><div class="svc-name">Video kūrimas</div><div class="svc-desc">Profesionalus filmavimas ir montažas. Korporatyviniai filmai, reklama, socialinė medija.</div><div class="svc-tags"><span class="stag">Filmavimas</span><span class="stag">Montažas</span><span class="stag">Animacija</span></div></div></div>
@@ -480,11 +490,19 @@
 <!-- ABOUT (cream) -->
 <section class="about" id="apie">
   <div class="bg-ltr bgl-abt" data-par="-0.13">11</div>
-  <p class="sec-eye l rv" style="position:relative;z-index:1">Apie Abdera</p>
-  <div class="about-g">
-    <div class="abt rv">
+  <div class="sec-head rv" style="position:relative;z-index:1;margin-bottom:56px">
+    <div>
+      <p class="sec-eye l">Apie Abdera</p>
       <h2 class="sec-title lt">Istorijos prasideda<br><em class="grad">nuo klausimo</em></h2>
-      <p style="margin-top:28px">Abdera — <strong>kūrybinė produkcija su 11 metų patirtimi</strong> Lietuvoje. Nuo korporatyvinių filmų iki renginių organizavimo, nuo reklamos iki podcast serijų — kiekvienam projektui skiriame individualų dėmesį.</p>
+    </div>
+    <div class="sec-head-r">
+      <p class="sec-count">Est. 2014 · Kaunas</p>
+      <p class="sec-desc">Abdera — kūrybinė produkcija su 11 metų patirtimi. Kuriame turinį, kuris ne tik atrodo gerai, bet ir veikia.</p>
+    </div>
+  </div>
+  <div class="about-g" style="position:relative;z-index:1">
+    <div class="abt rv">
+      <p>Abdera — <strong>kūrybinė produkcija su 11 metų patirtimi</strong> Lietuvoje. Nuo korporatyvinių filmų iki renginių organizavimo, nuo reklamos iki podcast serijų — kiekvienam projektui skiriame individualų dėmesį.</p>
       <p>Dabar su AI technologijomis žengėme dar vieną žingsnį — <strong>greičiau, tiksliau, moderniau</strong>.</p>
       <div class="dir-row">
         <div class="d-init">J</div>
@@ -500,34 +518,6 @@
   </div>
 </section>
 
-<!-- PORTFOLIO (dark) -->
-<section class="portfolio" id="projektai" style="position:relative;overflow:hidden">
-  <div class="bg-ltr bgl-port" data-par="0.18" style="z-index:0">PORTFOLIO</div>
-  <p class="sec-eye d rv" style="position:relative;z-index:1">Portfolio</p>
-  <h2 class="sec-title dk rv" style="position:relative;z-index:1">Mūsų <em class="grad">darbai</em></h2>
-  <div class="port-g" style="position:relative;z-index:1">
-    <div class="pi rv">
-      <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&auto=format&fit=crop&q=80')"></div>
-      <div class="pi-ov"><div class="pi-cat">Video produkcija</div><div class="pi-title">Korporatyviniai filmai ir reklaminės kampanijos</div></div>
-    </div>
-    <div class="pi rv d1">
-      <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=700&auto=format&fit=crop&q=80')"></div>
-      <div class="pi-ov"><div class="pi-cat">Renginiai</div><div class="pi-title">Įmonių renginiai ir konferencijos</div></div>
-    </div>
-    <div class="pi rv d2">
-      <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1511578314322-379afb476865?w=700&auto=format&fit=crop&q=80')"></div>
-      <div class="pi-ov"><div class="pi-cat">Renginiai</div><div class="pi-title">Įmonių vakarėliai</div></div>
-    </div>
-    <div class="pi rv d1">
-      <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=700&auto=format&fit=crop&q=80')"></div>
-      <div class="pi-ov"><div class="pi-cat">Audio</div><div class="pi-title">Podcast serijos</div></div>
-    </div>
-    <div class="pi rv d2">
-      <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=700&auto=format&fit=crop&q=80')"></div>
-      <div class="pi-ov"><div class="pi-cat">Socialinė medija</div><div class="pi-title">Skaitmeninė reklama</div></div>
-    </div>
-  </div>
-</section>
 
 <!-- CTA BAND (indigo) -->
 <section class="cta-band">
@@ -538,8 +528,16 @@
 
 <!-- CONTACT (cream) -->
 <section class="contact" id="kontaktai">
-  <p class="sec-eye l rv">Kontaktai</p>
-  <h2 class="sec-title lt rv">Rašykite <em>mums</em></h2>
+  <div class="sec-head rv">
+    <div>
+      <p class="sec-eye l">Kontaktai</p>
+      <h2 class="sec-title lt">Rašykite <em class="grad">mums</em></h2>
+    </div>
+    <div class="sec-head-r">
+      <p class="sec-count">Atsakome per 24h</p>
+      <p class="sec-desc">Papasakokite apie savo projektą — aptarsime galimybes ir paruošime pasiūlymą be jokių įsipareigojimų.</p>
+    </div>
+  </div>
   <div class="contact-g">
     <div class="ci-b rv">
       <div class="ci"><label>Telefonas</label><a href="tel:+37061805700">+370 618 05700</a></div>
@@ -562,7 +560,7 @@
 
 <footer>
   <div class="f-logo">ABD<em>E</em>RA</div>
-  <ul class="f-links"><li><a href="#paslaugos">Paslaugos</a></li><li><a href="#bandyk">Bandyti</a></li><li><a href="#apie">Apie</a></li><li><a href="#projektai">Projektai</a></li><li><a href="#kontaktai">Kontaktai</a></li></ul>
+  <ul class="f-links"><li><a href="#paslaugos">Paslaugos</a></li><li><a href="#bandyk">Bandyti</a></li><li><a href="#apie">Apie</a></li><li><a href="#kontaktai">Kontaktai</a></li></ul>
   <div class="f-copy">© 2026 ABDERA, UAB</div>
 </footer>
 
