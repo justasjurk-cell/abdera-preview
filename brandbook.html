@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abdera — Brand Style Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --void:    #0A0A0F;
+      --layer:   #13131C;
+      --layer2:  #1C1C2A;
+      --white:   #FFFFFF;
+      --cream:   #F8F5F0;
+      --cream2:  #F0EDE8;
+      --indigo:  #5B4BFF;
+      --indigo2: #7C6FFF;
+      --coral:   #FF4D6A;
+      --coral2:  #FF8096;
+      --phosphor:#00D97E;
+      --ink:     #0E0E10;
+      --ink2:    #5C5C68;
+      --ink3:    #9A9AA8;
+      --grotesk: 'Space Grotesk', sans-serif;
+      --dm:      'DM Sans', sans-serif;
+      --mono:    'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--dm); background: var(--void); color: var(--white); overflow-x: hidden; }
+
+    /* ── PAGE LAYOUT ── */
+    .page { min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 64px; }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: space-between; padding: 56px 64px;
+      background: var(--void); position: relative; overflow: hidden;
+    }
+    .cover-glow1 { position:absolute; width:700px; height:700px; border-radius:50%; background:radial-gradient(circle,rgba(91,75,255,0.18),transparent 65%); top:-200px; right:-150px; pointer-events:none; animation:float1 12s ease-in-out infinite; }
+    .cover-glow2 { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(255,77,106,0.12),transparent 65%); bottom:-100px; left:-100px; pointer-events:none; animation:float2 15s ease-in-out infinite; }
+    @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,30px)} }
+    @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-25px)} }
+    .cover-nav { font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.25); display:flex; justify-content:space-between; position:relative; z-index:1; }
+    .cover-center { position:relative; z-index:1; }
+    .cover-label { font-family:var(--mono); font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:40px; }
+    .cover-title { font-family:var(--grotesk); font-size:clamp(80px,12vw,180px); font-weight:900; letter-spacing:-0.04em; line-height:0.9; text-transform:uppercase; }
+    .cover-title .e { color:var(--coral); }
+    .cover-title .str { -webkit-text-stroke:2px rgba(255,255,255,0.18); color:transparent; }
+    .cover-sub { margin-top:32px; font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); letter-spacing:0.05em; }
+    .cover-foot { display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:1; }
+    .cover-meta { font-family:var(--mono); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.2); line-height:2; }
+    .cover-ver { font-family:var(--mono); font-size:60px; font-weight:700; color:rgba(255,255,255,0.04); letter-spacing:-0.04em; }
+
+    /* ── SECTION STYLES ── */
+    .bb-section { padding: 100px 64px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .bb-section.light { background: var(--cream); color: var(--ink); border-top: 1px solid rgba(14,14,16,0.08); }
+    .bb-section.mid { background: var(--layer); }
+    .section-eye { font-family:var(--mono); font-size:9px; letter-spacing:0.28em; text-transform:uppercase; margin-bottom:14px; color:rgba(255,255,255,0.25); }
+    .bb-section.light .section-eye { color:var(--ink3); }
+    .section-title { font-family:var(--grotesk); font-size:clamp(36px,4vw,56px); font-weight:800; letter-spacing:-0.03em; line-height:1.05; color:var(--white); }
+    .bb-section.light .section-title { color:var(--ink); }
+    .section-title em { font-style:italic; font-weight:300; color:var(--coral); }
+    .section-desc { font-size:15px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.8; max-width:520px; margin-top:14px; }
+    .bb-section.light .section-desc { color:var(--ink2); }
+    .section-head { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end; margin-bottom:64px; }
+    .section-head-r { text-align:right; }
+
+    /* ── LOGO SECTION ── */
+    .logo-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; background:rgba(255,255,255,0.05); }
+    .logo-cell { padding:64px; display:flex; flex-direction:column; gap:32px; background:var(--layer); }
+    .logo-cell.dark-bg  { background:#0A0A0F; }
+    .logo-cell.light-bg { background:#F8F5F0; }
+    .logo-cell.mid-bg   { background:#1C1C2A; }
+    .logo-cell.indigo-bg{ background:#5B4BFF; }
+    .logo-cell.coral-bg { background:#FF4D6A; }
+    .logo-label { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+    .logo-cell.light-bg .logo-label { color:rgba(14,14,16,0.3); }
+
+    /* WORDMARK SVG-rendered */
+    .wm { font-family:var(--grotesk); font-weight:800; letter-spacing:-0.02em; text-transform:uppercase; line-height:1; }
+    .wm-lg { font-size:72px; }
+    .wm-md { font-size:48px; }
+    .wm-sm { font-size:32px; }
+    .wm-xs { font-size:20px; }
+    .wm .e { color:var(--coral); }
+    .wm.on-dark { color:var(--white); }
+    .wm.on-light { color:var(--ink); }
+    .wm.on-color { color:var(--white); }
+    .wm.mono { color:var(--ink3); }
+    .wm.mono .e { color:var(--ink3); }
+    .wm.mono-w { color:rgba(255,255,255,0.5); }
+    .wm.mono-w .e { color:rgba(255,255,255,0.5); }
+    .wm.inv { color:var(--white); }
+    .wm.inv .e { color:var(--white); opacity:0.55; }
+
+    /* ICON / MARK */
+    .brand-mark { display:inline-flex; flex-direction:column; gap:4px; }
+    .bm-row { display:flex; gap:4px; }
+    .bm-sq { width:18px; height:18px; border-radius:2px; }
+    .bm-sq.ind { background:var(--indigo); }
+    .bm-sq.cor { background:var(--coral); }
+    .bm-sq.vd  { background:rgba(255,255,255,0.06); }
+    .bm-sq.wh  { background:var(--white); }
+    .brand-mark.lg .bm-sq { width:28px; height:28px; border-radius:3px; }
+    .brand-mark.xl .bm-sq { width:42px; height:42px; border-radius:4px; }
+
+    /* ICON: Geometric A mark */
+    .a-mark { position:relative; display:inline-block; }
+    .a-mark svg { display:block; }
+
+    /* ── COLORS ── */
+    .color-row { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; margin-bottom:3px; }
+    .color-chip { padding:28px 20px 20px; position:relative; }
+    .chip-name { font-family:var(--grotesk); font-size:14px; font-weight:700; color:var(--white); }
+    .chip-hex  { font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.55); margin-top:4px; }
+    .chip-role { font-family:var(--mono); font-size:8px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:10px; display:block; }
+    .chip-on-light .chip-name { color:var(--ink); }
+    .chip-on-light .chip-hex  { color:var(--ink2); }
+    .chip-on-light .chip-role { color:var(--ink3); }
+    .color-usage { margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .cu { background:var(--layer2); border-radius:4px; padding:20px; }
+    .cu-bar { height:6px; border-radius:3px; margin-bottom:14px; }
+    .cu-name { font-family:var(--mono); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:4px; }
+    .cu-val  { font-family:var(--grotesk); font-weight:700; font-size:14px; }
+
+    /* ── TYPOGRAPHY ── */
+    .type-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; background:rgba(14,14,16,0.06); }
+    .type-cell { background:var(--white); padding:44px; }
+    .type-cell.dk { background:var(--layer); }
+    .type-label { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink3); margin-bottom:24px; }
+    .type-cell.dk .type-label { color:rgba(255,255,255,0.25); }
+    .type-sample-xl { font-family:var(--grotesk); font-weight:800; font-size:clamp(48px,7vw,96px); letter-spacing:-0.04em; line-height:0.95; color:var(--ink); text-transform:uppercase; }
+    .type-cell.dk .type-sample-xl { color:var(--white); }
+    .type-sample-h2 { font-family:var(--grotesk); font-weight:700; font-size:40px; letter-spacing:-0.025em; line-height:1.1; color:var(--ink); }
+    .type-cell.dk .type-sample-h2 { color:var(--white); }
+    .type-sample-body { font-family:var(--dm); font-size:17px; font-weight:300; line-height:1.8; color:var(--ink2); }
+    .type-sample-mono { font-family:var(--mono); font-size:12px; letter-spacing:0.08em; color:var(--ink3); line-height:1.9; }
+    .type-cell.dk .type-sample-mono { color:rgba(255,255,255,0.3); }
+    .type-scale { display:flex; flex-direction:column; gap:2px; margin-top:40px; background:rgba(14,14,16,0.06); }
+    .ts-row { background:var(--white); padding:16px 28px; display:flex; align-items:center; gap:24px; border-bottom:1px solid rgba(14,14,16,0.05); }
+    .ts-meta { font-family:var(--mono); font-size:9px; color:var(--ink3); letter-spacing:0.1em; white-space:nowrap; min-width:140px; }
+    .ts-text { font-family:var(--grotesk); color:var(--ink); }
+
+    /* ── VOICE ── */
+    .voice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; background:rgba(255,255,255,0.04); margin-bottom:40px; }
+    .vv { background:var(--layer2); padding:40px 32px; }
+    .vv-ico { font-size:32px; margin-bottom:16px; }
+    .vv-name { font-family:var(--grotesk); font-weight:700; font-size:18px; color:var(--white); margin-bottom:8px; }
+    .vv-desc { font-size:13px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.75; }
+    .vv-ex { margin-top:16px; padding:12px 14px; background:rgba(255,255,255,0.04); border-left:2px solid var(--coral); font-size:12px; font-weight:300; color:rgba(255,255,255,0.55); font-style:italic; line-height:1.7; }
+    .do-dont { display:grid; grid-template-columns:1fr 1fr; gap:3px; background:rgba(255,255,255,0.04); }
+    .dd { padding:36px; }
+    .dd.do-box { background:rgba(0,217,126,0.06); }
+    .dd.dont-box { background:rgba(255,77,106,0.06); }
+    .dd-head { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:20px; }
+    .dd.do-box .dd-head { color:var(--phosphor); }
+    .dd.dont-box .dd-head { color:var(--coral); }
+    .dd ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .dd ul li { font-size:13px; font-weight:300; color:rgba(255,255,255,0.6); padding-left:18px; position:relative; line-height:1.6; }
+    .dd.do-box ul li::before { content:'✓'; position:absolute; left:0; color:var(--phosphor); font-weight:700; }
+    .dd.dont-box ul li::before { content:'✗'; position:absolute; left:0; color:var(--coral); font-weight:700; }
+
+    /* ── LOGO RULES ── */
+    .rules-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; background:rgba(255,255,255,0.04); }
+    .rule-cell { background:var(--layer2); padding:40px 32px; }
+    .rule-title { font-family:var(--grotesk); font-weight:700; font-size:15px; color:var(--white); margin-bottom:8px; }
+    .rule-desc { font-size:13px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.7; }
+    .rule-visual { margin-top:24px; display:flex; align-items:center; justify-content:center; padding:28px; background:rgba(255,255,255,0.03); border-radius:3px; min-height:100px; }
+    .clear-box { position:relative; display:inline-block; }
+    .clear-box::before { content:''; position:absolute; inset:-16px; border:1px dashed rgba(255,77,106,0.4); }
+    .x-mark { position:relative; opacity:0.35; }
+    .x-mark::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 45%,var(--coral) 46%,var(--coral) 54%,transparent 55%); }
+    .size-demo { display:flex; align-items:flex-end; gap:20px; }
+
+    /* ── APPLICATIONS ── */
+    .app-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; background:rgba(255,255,255,0.04); }
+    .app-cell { background:var(--layer2); padding:40px; display:flex; flex-direction:column; gap:24px; }
+    .app-label { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.25); }
+
+    /* Business card mockup */
+    .bcard { width:340px; height:190px; background:var(--void); border:1px solid rgba(255,255,255,0.08); border-radius:4px; padding:28px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+    .bcard::before { content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle,rgba(91,75,255,0.2),transparent 70%); }
+    .bcard-logo { font-family:var(--grotesk); font-weight:800; font-size:20px; letter-spacing:0.18em; text-transform:uppercase; }
+    .bcard-logo .e { color:var(--coral); }
+    .bcard-name { font-family:var(--grotesk); font-size:14px; font-weight:600; color:var(--white); }
+    .bcard-role { font-family:var(--mono); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:3px; }
+    .bcard-contact { font-family:var(--mono); font-size:8px; color:rgba(255,255,255,0.3); line-height:1.9; letter-spacing:0.05em; }
+
+    /* Email signature */
+    .esig { background:var(--white); border-radius:4px; padding:24px 28px; display:flex; gap:20px; align-items:center; max-width:480px; }
+    .esig-divider { width:2px; height:60px; background:linear-gradient(to bottom,var(--indigo),var(--coral)); border-radius:2px; flex-shrink:0; }
+    .esig-logo { font-family:var(--grotesk); font-weight:800; font-size:20px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink); }
+    .esig-logo .e { color:var(--coral); }
+    .esig-name { font-size:13px; font-weight:600; color:var(--ink); }
+    .esig-role { font-family:var(--mono); font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); margin-top:2px; }
+    .esig-right { display:flex; flex-direction:column; gap:3px; }
+    .esig-line { font-size:11px; color:var(--ink2); }
+
+    /* Social avatar */
+    .av-grid { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .avatar { display:flex; align-items:center; justify-content:center; border-radius:50%; font-family:var(--grotesk); font-weight:800; text-transform:uppercase; flex-shrink:0; }
+    .av-xl { width:80px; height:80px; font-size:26px; }
+    .av-lg { width:56px; height:56px; font-size:18px; }
+    .av-md { width:40px; height:40px; font-size:13px; }
+    .av-sm { width:28px; height:28px; font-size:9px; }
+
+    /* ── FOOTER ── */
+    .bb-foot { padding:48px 64px; border-top:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:space-between; }
+    .bb-foot-logo { font-family:var(--grotesk); font-size:14px; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.25); }
+    .bb-foot-logo em { color:var(--coral); font-style:normal; }
+    .bb-foot-note { font-family:var(--mono); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.15); }
+
+    /* ── UTILS ── */
+    .mt32 { margin-top:32px; }
+    .mt48 { margin-top:48px; }
+    .grad { background:linear-gradient(135deg,var(--indigo),var(--coral)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    @media print { body { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ COVER ══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-glow1"></div>
+  <div class="cover-glow2"></div>
+  <div class="cover-nav">
+    <span>Abdera, UAB · Stiliaus knyga</span>
+    <span>Versija 1.0 · 2026</span>
+  </div>
+  <div class="cover-center">
+    <div class="cover-label">// Kūrybinė produkcija & AI · Kaunas, Lietuva</div>
+    <div class="cover-title">ABD<span class="e">E</span>RA<br><span class="str">Stiliaus</span><br><span class="str">Knyga</span></div>
+    <div class="cover-sub">Prekės ženklo vadovas · Logo · Spalvos · Tipografija · Balsas</div>
+  </div>
+  <div class="cover-foot">
+    <div class="cover-meta">
+      ABDERA, UAB · ĮM. K. 303489407<br>
+      TAIKOS PR. 88A, KAUNAS, LT<br>
+      INFO@ABDERA.LT · +370 618 05700
+    </div>
+    <div class="cover-ver">01</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 01 LOGOTIPAS ══════════════════════════════════ -->
+<div class="bb-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye">01 · Logotipas</div>
+        <h2 class="section-title">Logo <em>variantai</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc">Abdera logotipas — geometrinis žodinis ženklas (wordmark). Pagrindinis elementas yra raidė <strong style="color:var(--coral)">E</strong> koralinės spalvos — ji išskiria ženklą ir reprezentuoja energiją bei kūrybiškumą.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logo on dark -->
+  <div class="logo-grid" style="max-width:1200px;margin:0 auto">
+    <div class="logo-cell dark-bg">
+      <div class="logo-label">Pagrindinis · Tamsiame fone</div>
+      <div class="wm wm-lg on-dark">ABD<span class="e">E</span>RA</div>
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.12em;text-transform:uppercase;margin-top:8px">Space Grotesk ExtraBold · 72px · LS -0.02em</div>
+    </div>
+    <div class="logo-cell light-bg">
+      <div class="logo-label" style="color:rgba(14,14,16,0.3)">Pagrindinis · Šviesiame fone</div>
+      <div class="wm wm-lg on-light">ABD<span class="e">E</span>RA</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.12em;text-transform:uppercase;margin-top:8px">Space Grotesk ExtraBold · 72px · LS -0.02em</div>
+    </div>
+    <div class="logo-cell indigo-bg">
+      <div class="logo-label">Spalvotame fone · Indigo</div>
+      <div class="wm wm-lg on-color">ABD<span class="inv e">E</span>RA</div>
+    </div>
+    <div class="logo-cell coral-bg">
+      <div class="logo-label">Spalvotame fone · Coral</div>
+      <div class="wm wm-lg on-color">ABD<span class="inv e">E</span>RA</div>
+    </div>
+
+    <!-- Mono versions -->
+    <div class="logo-cell mid-bg">
+      <div class="logo-label">Monochromatinis · Tamsus</div>
+      <div class="wm wm-lg mono-w">ABD<span class="e">E</span>RA</div>
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;margin-top:12px">Naudoti tik kai spalva neprieinama</div>
+    </div>
+    <div class="logo-cell" style="background:#E8E5E0">
+      <div class="logo-label" style="color:rgba(14,14,16,0.3)">Monochromatinis · Šviesas</div>
+      <div class="wm wm-lg mono" style="color:rgba(14,14,16,0.5)">ABD<span class="e" style="color:rgba(14,14,16,0.5)">E</span>RA</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;margin-top:12px">Naudoti tik kai spalva neprieinama</div>
+    </div>
+  </div>
+
+  <!-- Dydžiai -->
+  <div class="container mt48">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:24px">Dydžio hierarchija</div>
+    <div style="background:var(--layer);padding:48px;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;align-items:center;gap:32px">
+        <div class="wm on-dark" style="font-size:64px">ABD<span class="e">E</span>RA</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em">PAGRINDINIS · ≥ 48px · Headings, Hero, OOH</div>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,0.05)"></div>
+      <div style="display:flex;align-items:center;gap:32px">
+        <div class="wm on-dark" style="font-size:36px">ABD<span class="e">E</span>RA</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em">VIDUTINIS · 24–48px · Prenumerata, Print, Digital</div>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,0.05)"></div>
+      <div style="display:flex;align-items:center;gap:32px">
+        <div class="wm on-dark" style="font-size:22px">ABD<span class="e">E</span>RA</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em">MAŽAS · 16–24px · Nav, Watermark, Subheadings</div>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,0.05)"></div>
+      <div style="display:flex;align-items:center;gap:32px">
+        <div class="wm on-dark" style="font-size:14px">ABD<span class="e">E</span>RA</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em">MINIMALUS · 14px · Minimali leistina riba</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 02 LOGO TAISYKLĖS ══════════════════════════════════ -->
+<div class="bb-section mid">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye" style="color:rgba(255,255,255,0.25)">02 · Logotipo naudojimas</div>
+        <h2 class="section-title">Apsauginė zona <em>&</em> taisyklės</h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc">Apsauginė zona — logotipo aukščio 50% plotis aplink ženklo ribas. Niekas negali įsiterpti į šią erdvę.</p>
+      </div>
+    </div>
+    <div class="rules-grid">
+      <div class="rule-cell">
+        <div class="rule-title">Apsauginė zona</div>
+        <div class="rule-desc">Minimalus tarpas aplink logotipą — pusė raidės aukščio iš visų pusių. Jokie kiti elementai negali patekti į šią zoną.</div>
+        <div class="rule-visual">
+          <div class="clear-box">
+            <div class="wm on-dark" style="font-size:28px">ABD<span class="e">E</span>RA</div>
+          </div>
+        </div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-title">Minimalus dydis</div>
+        <div class="rule-desc">Skaitmeninis: ne mažiau 80px pločio. Spaudos: ne mažiau 20mm pločio. Žemiau šių ribų logotipas neįskaitomas.</div>
+        <div class="rule-visual">
+          <div class="size-demo">
+            <div>
+              <div class="wm on-dark" style="font-size:22px;opacity:0.4">ABD<span class="e">E</span>RA</div>
+              <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.2);margin-top:6px;text-align:center">PER MAŽAS</div>
+            </div>
+            <div>
+              <div class="wm on-dark" style="font-size:32px">ABD<span class="e">E</span>RA</div>
+              <div style="font-family:var(--mono);font-size:8px;color:var(--phosphor);margin-top:6px;text-align:center">MINIMALUS ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-title">Kontrastas</div>
+        <div class="rule-desc">Logotipas privalo turėti pakankamą kontrastą. Naudoti šviesų logotipą tamsiame fone ir atvirkščiai.</div>
+        <div class="rule-visual" style="gap:16px;flex-direction:column">
+          <div style="background:#0A0A0F;padding:12px 20px;border-radius:2px">
+            <div class="wm on-dark" style="font-size:22px">ABD<span class="e">E</span>RA</div>
+          </div>
+          <div style="background:#F8F5F0;padding:12px 20px;border-radius:2px">
+            <div class="wm on-light" style="font-size:22px">ABD<span class="e">E</span>RA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Draudžiama -->
+    <div class="mt48">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:20px">Draudžiama naudoti</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:rgba(255,255,255,0.04)">
+        <div style="background:var(--layer);padding:28px;text-align:center">
+          <div class="wm on-dark" style="font-size:22px;text-transform:lowercase">abd<span class="e">e</span>ra</div>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:0.1em;margin-top:12px">✗ MAŽOSIOS RAIDĖS</div>
+        </div>
+        <div style="background:var(--layer);padding:28px;text-align:center">
+          <div class="wm on-dark" style="font-size:22px;font-style:italic;font-weight:400">ABD<span class="e">E</span>RA</div>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:0.1em;margin-top:12px">✗ KURSYVAS / THIN</div>
+        </div>
+        <div style="background:var(--layer);padding:28px;text-align:center">
+          <div class="wm on-dark" style="font-size:22px;transform:skewX(-10deg);display:inline-block">ABD<span class="e">E</span>RA</div>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:0.1em;margin-top:12px">✗ IŠKRAIPYMAS</div>
+        </div>
+        <div style="background:var(--layer);padding:28px;text-align:center">
+          <div class="wm" style="font-size:22px;background:linear-gradient(90deg,var(--indigo),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent">ABD<span>E</span>RA</div>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:0.1em;margin-top:12px">✗ GRADIENTAS ANT LOGO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 03 SPALVOS ══════════════════════════════════ -->
+<div class="bb-section light">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye">03 · Spalvų sistema</div>
+        <h2 class="section-title" style="color:var(--ink)">Pirminė <em>paletė</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc" style="color:var(--ink2)">Abdera spalvų sistema sukurta iš kontrastinių porų: tamsus pagrindas + šviesi kreminė + dvi akcentinės spalvos. Sistema veikia ir skaitmeninėje, ir spaudinių aplinkoje.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary palette -->
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="color-row">
+      <div class="color-chip" style="background:#0A0A0F;grid-column:span 2;aspect-ratio:unset;min-height:200px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name" style="font-size:28px">Void</div>
+        <div>
+          <div class="chip-hex">#0A0A0F</div>
+          <div class="chip-hex">RGB 10 · 10 · 15</div>
+          <span class="chip-role">Pagrindinis fonas · Hero · Footer</span>
+        </div>
+      </div>
+      <div class="color-chip" style="background:#5B4BFF;min-height:200px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name">Indigo</div>
+        <div>
+          <div class="chip-hex">#5B4BFF</div>
+          <div class="chip-hex">RGB 91 · 75 · 255</div>
+          <span class="chip-role">CTA · Akcentas · AI</span>
+        </div>
+      </div>
+      <div class="color-chip" style="background:#FF4D6A;min-height:200px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name">Coral</div>
+        <div>
+          <div class="chip-hex">#FF4D6A</div>
+          <div class="chip-hex">RGB 255 · 77 · 106</div>
+          <span class="chip-role">Logo E · Akcent · Hover</span>
+        </div>
+      </div>
+      <div class="color-chip chip-on-light" style="background:#F8F5F0;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(14,14,16,0.06)">
+        <div class="chip-name" style="color:var(--ink)">Cream</div>
+        <div>
+          <div class="chip-hex" style="color:var(--ink2)">#F8F5F0</div>
+          <div class="chip-hex" style="color:var(--ink2)">RGB 248 · 245 · 240</div>
+          <span class="chip-role" style="color:var(--ink3)">Šviesas fonas · Sekcijos</span>
+        </div>
+      </div>
+    </div>
+    <div class="color-row" style="margin-top:3px">
+      <div class="color-chip" style="background:#13131C;min-height:100px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name" style="font-size:13px">Layer</div>
+        <div>
+          <div class="chip-hex">#13131C</div>
+          <span class="chip-role">Antriniai tamsūs el.</span>
+        </div>
+      </div>
+      <div class="color-chip" style="background:#7C6FFF;min-height:100px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name" style="font-size:13px">Indigo Light</div>
+        <div>
+          <div class="chip-hex">#7C6FFF</div>
+          <span class="chip-role">Hover · Tints</span>
+        </div>
+      </div>
+      <div class="color-chip" style="background:#FF8096;min-height:100px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name" style="font-size:13px">Coral Light</div>
+        <div>
+          <div class="chip-hex">#FF8096</div>
+          <span class="chip-role">Hover · Tints</span>
+        </div>
+      </div>
+      <div class="color-chip" style="background:#00D97E;min-height:100px;display:flex;flex-direction:column;justify-content:space-between">
+        <div class="chip-name" style="font-size:13px">Phosphor</div>
+        <div>
+          <div class="chip-hex">#00D97E</div>
+          <span class="chip-role">AI · Live · Status</span>
+        </div>
+      </div>
+      <div class="color-chip chip-on-light" style="background:#F0EDE8;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(14,14,16,0.06)">
+        <div class="chip-name" style="color:var(--ink);font-size:13px">Cream 2</div>
+        <div>
+          <div class="chip-hex" style="color:var(--ink2)">#F0EDE8</div>
+          <span class="chip-role" style="color:var(--ink3)">Hover · Alt. fonas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage ratios -->
+  <div class="container">
+    <div class="mt48" style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:20px">Spalvų naudojimo santykis</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:var(--cream2);padding:20px;border-radius:4px">
+        <div style="height:8px;border-radius:4px;background:#0A0A0F;width:70%;margin-bottom:12px"></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase">Void — 40%</div>
+        <div style="font-size:12px;color:var(--ink2);margin-top:4px">Hero, footer, tamsios sekcijos</div>
+      </div>
+      <div style="background:var(--cream2);padding:20px;border-radius:4px">
+        <div style="height:8px;border-radius:4px;background:#F8F5F0;border:1px solid rgba(14,14,16,0.1);width:45%;margin-bottom:12px"></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase">Cream — 35%</div>
+        <div style="font-size:12px;color:var(--ink2);margin-top:4px">Šviesos sekcijos, fonas</div>
+      </div>
+      <div style="background:var(--cream2);padding:20px;border-radius:4px">
+        <div style="height:8px;border-radius:4px;background:#5B4BFF;width:20%;margin-bottom:12px"></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase">Indigo — 15%</div>
+        <div style="font-size:12px;color:var(--ink2);margin-top:4px">CTA, antraštės akcentai</div>
+      </div>
+      <div style="background:var(--cream2);padding:20px;border-radius:4px">
+        <div style="height:8px;border-radius:4px;background:#FF4D6A;width:10%;margin-bottom:12px"></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase">Coral — 10%</div>
+        <div style="font-size:12px;color:var(--ink2);margin-top:4px">Logo E, hover, highlights</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 04 TIPOGRAFIJA ══════════════════════════════════ -->
+<div class="bb-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye">04 · Tipografija</div>
+        <h2 class="section-title">Šriftų <em>sistema</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc">Trijų šriftų sistema — kiekvienas turi savo aiškų vaidmenį. Space Grotesk dominuoja, DM Sans kvėpuoja, Space Mono technikaliai.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="type-grid" style="max-width:1200px;margin:0 auto">
+    <div class="type-cell dk">
+      <div class="type-label">Space Grotesk ExtraBold · Antraštės · Display</div>
+      <div class="type-sample-xl">Kūryba<br>prasideda<br>čia.</div>
+      <div style="margin-top:24px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.25);line-height:2">
+        Google Fonts · Nemokamas<br>
+        Svoriai: 300 · 400 · 500 · 600 · <strong>700 · 800</strong><br>
+        Naudoti: Logo, hero, section titles, CTA
+      </div>
+    </div>
+    <div class="type-cell">
+      <div class="type-label" style="color:var(--ink3)">DM Sans Light/Regular · Kūno tekstas · Aprašymai</div>
+      <div class="type-sample-body">Abdera kuria turinį, kuris ne tik atrodo gerai — jis veikia. Kiekvienas projektas prasideda nuo klausimo: ką norite pasakyti? Dirbame glaudžiai su klientais, gilinamės į tikslus ir kuriame sprendimus, kurie paliks įspūdį.</div>
+      <div style="margin-top:24px;font-family:var(--mono);font-size:10px;color:var(--ink3);line-height:2">
+        Google Fonts · Nemokamas<br>
+        Svoriai: <strong>300</strong> · <strong>400</strong> · <strong>500</strong> · Italic<br>
+        Naudoti: Visi aprašomieji tekstai, formos, UI
+      </div>
+    </div>
+    <div class="type-cell dk">
+      <div class="type-label">Space Mono · Techniniai elementai · Labels</div>
+      <div class="type-sample-mono">
+        // STATUS — LIVE<br>
+        VIDEO / 01 · AUDIO / 02<br>
+        KAUNAS · LIETUVA · EST. 2014<br>
+        INFO@ABDERA.LT<br>
+        +370 618 05700<br>
+        ——————————————
+      </div>
+      <div style="margin-top:24px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.25);line-height:2">
+        Google Fonts · Nemokamas<br>
+        Svoriai: 400 · <strong>700</strong><br>
+        Naudoti: Numeriai, etiketės, kodo blokai, metaduomenys
+      </div>
+    </div>
+    <div class="type-cell">
+      <div class="type-label" style="color:var(--ink3)">Tipografijos skalė</div>
+      <div class="type-scale" style="margin-top:0">
+        <div class="ts-row" style="padding:20px 24px"><div class="ts-meta">Display · 120–180px · GR800</div><div class="ts-text" style="font-size:52px;font-weight:800;letter-spacing:-0.04em;line-height:1">Abdera</div></div>
+        <div class="ts-row"><div class="ts-meta">H1 · 64–96px · GR800</div><div class="ts-text" style="font-size:36px;font-weight:800;letter-spacing:-0.03em">Kūryba</div></div>
+        <div class="ts-row"><div class="ts-meta">H2 · 40–60px · GR700</div><div class="ts-text" style="font-size:26px;font-weight:700;letter-spacing:-0.02em">Paslaugos</div></div>
+        <div class="ts-row"><div class="ts-meta">H3 · 24–32px · GR600</div><div class="ts-text" style="font-size:20px;font-weight:600">Video kūrimas</div></div>
+        <div class="ts-row"><div class="ts-meta">Body · 15–17px · DM300</div><div class="ts-text" style="font-family:var(--dm);font-size:15px;font-weight:300;color:var(--ink2)">Profesionalus filmavimas ir montažas.</div></div>
+        <div class="ts-row" style="border:0"><div class="ts-meta">Label · 9–11px · SM400</div><div class="ts-text" style="font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3)">VIDEO / 01</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 05 BALSAS ══════════════════════════════════ -->
+<div class="bb-section mid">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye" style="color:rgba(255,255,255,0.25)">05 · Prekės ženklo balsas</div>
+        <h2 class="section-title">Kaip mes <em>kalbame</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc">Abdera kalba aiškiai, įtikinamai ir be tuščių žodžių. Esame ekspertai — bet ne arogantiški. Kūrybiški — bet ne chaotiški.</p>
+      </div>
+    </div>
+    <div class="voice-grid">
+      <div class="vv">
+        <div class="vv-ico">🎯</div>
+        <div class="vv-name">Tiesioginis</div>
+        <div class="vv-desc">Sakome ką manome. Nėra perteklinių žodžių, tuščių frazių ar korporatyvinio žargono. Klientas gauna tikrą atsakymą.</div>
+        <div class="vv-ex">"Jūsų video bus paruoštas per 5 darbo dienas. Kaina — €890. Pradedame?"</div>
+      </div>
+      <div class="vv">
+        <div class="vv-ico">⚡</div>
+        <div class="vv-name">Energingas</div>
+        <div class="vv-desc">Kūryba turi energiją — mūsų kalba irgi. Nesame pilki. Esame įsitikinę savo darbo kokybe ir tai jaučiama kiekviename sakinyje.</div>
+        <div class="vv-ex">"Sukuriame turinį, kuris ne tik matomas — jis prisimenamas."</div>
+      </div>
+      <div class="vv">
+        <div class="vv-ico">🤝</div>
+        <div class="vv-name">Partneriškas</div>
+        <div class="vv-desc">Mes nesam paslaugų teikėjai — esame partneriai. Kiekvienam klientui skiriame individualų dėmesį ir dirbame kaip komanda.</div>
+        <div class="vv-ex">"Papasakokite apie projektą — aptarsime kaip geriausiai tai padaryti kartu."</div>
+      </div>
+    </div>
+
+    <div class="mt48">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:20px">Komunikacijos do & don't</div>
+      <div class="do-dont">
+        <div class="dd do-box">
+          <div class="dd-head">✓ Taip</div>
+          <ul>
+            <li>Konkretūs skaičiai ir datos ("per 5 dienas", "nuo €249")</li>
+            <li>Aktyvus balsas ("Kuriame", "Darome", "Padedame")</li>
+            <li>Trumpi, aiškūs sakiniai</li>
+            <li>Klausimai, kurie įtraukia ("Ką norite pasakyti?")</li>
+            <li>Savo srities kompetencijos demonstravimas</li>
+            <li>Lietuviški terminai kur įmanoma</li>
+          </ul>
+        </div>
+        <div class="dd dont-box">
+          <div class="dd-head">✗ Ne</div>
+          <ul>
+            <li>Tušti superliatyvai ("geriausias", "unikalus", "pirmaeilis")</li>
+            <li>Pasyvus balsas ("buvo sukurta", "gali būti padaryta")</li>
+            <li>Korporatyvinis žargonas ("synergi", "holistinis požiūris")</li>
+            <li>Nereikalingi šauktukai!!!</li>
+            <li>Klientų menkinimas ar pernelyg formalus tonas</li>
+            <li>Ilgi, sudėtingi sakiniai be prasmės</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 06 APLIKACIJOS ══════════════════════════════════ -->
+<div class="bb-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye">06 · Aplikacijos</div>
+        <h2 class="section-title">Ženklas <em>veikia</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc">Abdera logotipas veikia visuose formatuose — nuo vizitinės kortelės iki socialinių tinklų. Konsistencija visuose lietimo taškuose.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-grid" style="max-width:1200px;margin:0 auto">
+    <!-- Vizitinė kortelė -->
+    <div class="app-cell">
+      <div class="app-label">Vizitinė kortelė · 85×55mm</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="bcard">
+          <div class="bcard-logo">ABD<span class="e">E</span>RA</div>
+          <div>
+            <div class="bcard-name">Justas Jurkevičius</div>
+            <div class="bcard-role">Direktorius</div>
+          </div>
+          <div class="bcard-contact">
+            +370 618 05700<br>
+            info@abdera.lt<br>
+            abdera.lt
+          </div>
+        </div>
+        <div class="bcard" style="background:#F8F5F0;border-color:rgba(14,14,16,0.08)">
+          <div class="bcard-logo" style="color:var(--ink)">ABD<span class="e">E</span>RA</div>
+          <div>
+            <div class="bcard-name" style="color:var(--ink)">Justas Jurkevičius</div>
+            <div class="bcard-role" style="color:var(--ink3)">Direktorius</div>
+          </div>
+          <div class="bcard-contact" style="color:var(--ink3)">
+            +370 618 05700<br>
+            info@abdera.lt<br>
+            abdera.lt
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- El. pašto parašas -->
+    <div class="app-cell">
+      <div class="app-label">El. pašto parašas</div>
+      <div class="esig">
+        <div>
+          <div class="esig-logo">ABD<span class="e">E</span>RA</div>
+        </div>
+        <div class="esig-divider"></div>
+        <div class="esig-right">
+          <div class="esig-name">Justas Jurkevičius</div>
+          <div class="esig-role">Direktorius · Abdera, UAB</div>
+          <div class="esig-line" style="margin-top:8px">+370 618 05700</div>
+          <div class="esig-line">info@abdera.lt</div>
+          <div class="esig-line">abdera.lt</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.1em">Naudoti Arial 13px, baltas fonas, be HTML animacijų</div>
+    </div>
+
+    <!-- Socialinė medija -->
+    <div class="app-cell">
+      <div class="app-label">Socialiniai tinklai · Avataro dydžiai</div>
+      <div class="av-grid">
+        <div class="avatar av-xl" style="background:var(--void);border:2px solid rgba(255,255,255,0.1)">
+          <span style="font-size:28px;font-weight:900;color:white;letter-spacing:-0.02em">A<span style="color:var(--coral)">b</span></span>
+        </div>
+        <div class="avatar av-lg" style="background:var(--void)">
+          <span style="font-size:18px;font-weight:900;color:white;letter-spacing:-0.02em">A<span style="color:var(--coral)">b</span></span>
+        </div>
+        <div class="avatar av-md" style="background:var(--void)">
+          <span style="font-size:13px;font-weight:900;color:white">A</span>
+        </div>
+        <div class="avatar av-sm" style="background:var(--void)">
+          <span style="font-size:9px;font-weight:900;color:white">A</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;align-self:center">400px · 200px · 100px · 50px</div>
+      </div>
+      <div class="mt32" style="background:var(--layer2);padding:20px;border-radius:4px">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px">Socialinių tinklų antraštė · 1200×630px</div>
+        <div style="background:var(--void);border-radius:3px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden">
+          <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(91,75,255,0.2),transparent 70%);top:-80px;right:-60px"></div>
+          <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,106,0.15),transparent 70%);bottom:-60px;left:-40px"></div>
+          <div style="position:relative">
+            <div class="wm on-dark" style="font-size:32px">ABD<span class="e">E</span>RA</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:4px;font-weight:300">Kūrybinė produkcija & AI · Kaunas</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.2);text-align:right;position:relative">abdera.lt<br>info@abdera.lt</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pasirašymas / vandenženklis -->
+    <div class="app-cell">
+      <div class="app-label">Vandenženklis · Watermark ant video/foto</div>
+      <div style="background:#222;border-radius:4px;overflow:hidden;aspect-ratio:16/9;position:relative;display:flex;align-items:flex-end;justify-content:flex-end;padding:16px">
+        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&auto=format&fit=crop&q=60" alt="sample" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6">
+        <div style="position:relative;z-index:1;background:rgba(10,10,15,0.75);padding:6px 14px;border-radius:2px;backdrop-filter:blur(4px)">
+          <div class="wm on-dark" style="font-size:14px">ABD<span class="e">E</span>RA</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.1em">Dešinis apačiame kampas · 20–30% opacity · Nedidinti logo</div>
+
+      <!-- Pattern -->
+      <div class="mt32">
+        <div class="app-label">Dekoratyvinis fonas · Pattern</div>
+        <div style="background:repeating-linear-gradient(45deg,rgba(91,75,255,0.04) 0px,rgba(91,75,255,0.04) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(-45deg,rgba(255,77,106,0.03) 0px,rgba(255,77,106,0.03) 1px,transparent 1px,transparent 40px),var(--void);height:100px;border-radius:4px;display:flex;align-items:center;justify-content:center">
+          <div class="wm on-dark" style="font-size:22px;opacity:0.5">ABD<span class="e">E</span>RA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 07 SKAITMENINIAI STANDARTAI ══════════════════════════════════ -->
+<div class="bb-section light">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eye">07 · Skaitmeniniai standartai</div>
+        <h2 class="section-title" style="color:var(--ink)">Failų <em>formatai</em></h2>
+      </div>
+      <div class="section-head-r">
+        <p class="section-desc" style="color:var(--ink2)">Teisingi failų formatai užtikrina logo kokybę bet kokiame dydyje ir medijoje.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:rgba(14,14,16,0.06)">
+      <div style="background:var(--white);padding:32px 24px">
+        <div style="font-family:var(--grotesk);font-weight:800;font-size:32px;color:var(--indigo)">SVG</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:8px">Vektorinis</div>
+        <div style="font-size:13px;color:var(--ink2);margin-top:12px;line-height:1.7">Pagrindinis formatas. Naudoti visame web, prezentacijose, spaudai. Begalinis mastelis.</div>
+        <div style="margin-top:16px;padding:10px;background:var(--cream2);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--ink3)">abdera-logo.svg<br>abdera-logo-dark.svg<br>abdera-logo-light.svg</div>
+      </div>
+      <div style="background:var(--white);padding:32px 24px">
+        <div style="font-family:var(--grotesk);font-weight:800;font-size:32px;color:var(--coral)">PNG</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:8px">Skaidrus fonas</div>
+        <div style="font-size:13px;color:var(--ink2);margin-top:12px;line-height:1.7">El. paštui, socialinei medijai, prezentacijoms. Eksportuoti 2× ir 3× (@2x, @3x) retina ekranams.</div>
+        <div style="margin-top:16px;padding:10px;background:var(--cream2);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--ink3)">abdera@2x.png (800px)<br>abdera@3x.png (1200px)</div>
+      </div>
+      <div style="background:var(--white);padding:32px 24px">
+        <div style="font-family:var(--grotesk);font-weight:800;font-size:32px;color:var(--ink)">PDF</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:8px">Spauda</div>
+        <div style="font-size:13px;color:var(--ink2);margin-top:12px;line-height:1.7">Spausdintuvams, reklaminėms agentūroms. Naudoti CMYK spalvų profilį. 300 DPI minimaliai.</div>
+        <div style="margin-top:16px;padding:10px;background:var(--cream2);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--ink3)">CMYK Coral: 0/70/58/0<br>CMYK Indigo: 64/71/0/0</div>
+      </div>
+      <div style="background:var(--white);padding:32px 24px">
+        <div style="font-family:var(--grotesk);font-weight:800;font-size:32px;color:var(--phosphor)">ICO</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:8px">Favicon</div>
+        <div style="font-size:13px;color:var(--ink2);margin-top:12px;line-height:1.7">Naršyklės skirtukai, PWA. Naudoti "A" raidę koralinės spalvos fone arba tamsų logotipą.</div>
+        <div style="margin-top:16px;padding:10px;background:var(--cream2);border-radius:3px;font-family:var(--mono);font-size:10px;color:var(--ink3)">16×16 · 32×32 · 48×48<br>180×180 (Apple touch)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
+<div class="bb-foot">
+  <div class="bb-foot-logo">ABD<em>E</em>RA</div>
+  <div class="bb-foot-note">© 2026 Abdera, UAB · Visos teisės saugomos · Konfidencialu</div>
+  <div class="bb-foot-note">Stiliaus knyga v1.0 · Kaunas, Lietuva</div>
+</div>
+
+</body>
+</html>
