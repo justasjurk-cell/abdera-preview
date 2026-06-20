@@ -99,14 +99,35 @@
     .hs { display: flex; align-items: center; gap: 14px; padding: 13px 16px; border: 1px solid var(--bd-d); background: rgba(255,255,255,0.04); font-size: 13px; color: rgba(255,255,255,0.6); transition: all 0.2s; cursor: default; }
     .hs:hover { background: rgba(91,75,255,0.12); border-color: rgba(91,75,255,0.3); color: var(--white); }
 
+    /* SCROLL PROGRESS */
+    #prog { position:fixed; top:0; left:0; height:3px; width:0%; z-index:500; background:linear-gradient(90deg,var(--coral),var(--indigo),var(--coral)); background-size:200%; animation:progShimmer 2s linear infinite; pointer-events:none; }
+    @keyframes progShimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
     /* TAPE */
     .tape { overflow: hidden; border-top: 1px solid var(--bd-d); border-bottom: 1px solid var(--bd-l); background: var(--layer); padding: 13px 0; }
     .tape-t { display: flex; width: max-content; animation: ticker 22s linear infinite; }
     .tape-i { display: flex; align-items: center; gap: 26px; padding: 0 26px; font-family: var(--grotesk); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.25); white-space: nowrap; }
+    .tape-i.hl { color: var(--coral); }
+    .tape-i.hli { color: rgba(91,75,255,0.7); }
     .td-dot { width: 3px; height: 3px; background: var(--coral); border-radius: 50%; flex-shrink: 0; }
 
+    /* AURORA ORBS */
+    .aurora-wrap { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+    .orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0.55; }
+    .orb-a { width:520px; height:520px; background:radial-gradient(circle,rgba(91,75,255,0.22),transparent 70%); top:-120px; right:-60px; animation:floatA 14s ease-in-out infinite; }
+    .orb-b { width:380px; height:380px; background:radial-gradient(circle,rgba(255,77,106,0.18),transparent 70%); bottom:-80px; left:5%; animation:floatB 18s ease-in-out infinite; }
+    .orb-c { width:300px; height:300px; background:radial-gradient(circle,rgba(0,217,126,0.12),transparent 70%); top:40%; left:40%; animation:floatA 22s ease-in-out infinite reverse; }
+
+    /* GRADIENT TEXT */
+    .grad { background:linear-gradient(135deg,var(--indigo) 0%,var(--coral) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    /* WORD REVEAL */
+    .wrd { display:inline-block; overflow:hidden; vertical-align:bottom; }
+    .wrd span { display:inline-block; transform:translateY(110%); opacity:0; animation:wrdIn 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
+    @keyframes wrdIn { to { transform:translateY(0); opacity:1; } }
+
     /* SERVICES — LIGHT */
-    .services { background: var(--cream); padding: 120px 48px; }
+    .services { background: var(--cream); padding: 120px 48px; position: relative; }
     .sec-eye { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
     .sec-eye.d { color: rgba(255,255,255,0.3); }
     .sec-eye.l { color: var(--ink3); }
@@ -217,8 +238,14 @@
     .used-msg { text-align: center; padding: 40px 24px; color: var(--ink2); font-size: 15px; }
     .used-msg strong { color: var(--ink); display: block; margin-bottom: 8px; font-size: 18px; }
 
+    /* SVC CARD GLOW */
+    .svc::after { content:''; position:absolute; inset:-1px; border-radius:0; background:conic-gradient(from var(--ang,0deg),var(--indigo),var(--coral),#7C4BFF,var(--indigo)); opacity:0; transition:opacity 0.3s; z-index:0; }
+    .svc:hover::after { opacity:0.25; animation:borderSpin 3s linear infinite; }
+    @keyframes borderSpin { to { --ang:360deg; } }
+    @property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+
     /* ABOUT — white */
-    .about { background: var(--cream); padding: 120px 48px; border-top: 1px solid var(--bd-l); }
+    .about { background: var(--cream); padding: 120px 48px; border-top: 1px solid var(--bd-l); position: relative; }
     .about-g { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: start; margin-top: 60px; }
     .abt p { font-size: 17px; font-weight: 300; color: var(--ink2); line-height: 1.8; margin-bottom: 22px; }
     .abt p strong { color: var(--ink); font-weight: 500; }
@@ -324,6 +351,7 @@
   </style>
 </head>
 <body>
+<div id="prog"></div>
 
 <!-- NAV -->
 <nav id="nav" class="on-dark">
@@ -340,9 +368,14 @@
 <!-- HERO (dark) -->
 <section class="hero" id="hero">
   <div class="hglow1"></div><div class="hglow2"></div><div id="hgc"></div>
+  <canvas id="hpc" style="position:absolute;inset:0;pointer-events:none;z-index:0;opacity:0.5"></canvas>
   <div class="hero-text">
     <p class="h-eye">// Kaunas &nbsp;·&nbsp; Lietuva &nbsp;·&nbsp; <span>Est. 2014</span></p>
-    <h1><div>Kuriame</div><div class="str">Turinį</div><div class="acc">Gyvą.</div></h1>
+    <h1>
+      <div><span class="wrd" style="--d:.05s"><span>Kuriame</span></span></div>
+      <div class="str"><span class="wrd" style="--d:.18s"><span>Turinį</span></span></div>
+      <div class="acc"><span class="wrd" style="--d:.32s"><span>Gyvą.</span></span></div>
+    </h1>
     <p class="h-sub">Kūrybinė produkcija su <strong>11 metų patirtimi</strong> — video, renginiai, audio ir pasakojimas. Dabar su <strong>AI technologijomis.</strong></p>
     <div class="h-btns">
       <a href="#bandyk" class="btn-c">Išbandyti nemokamai ★</a>
@@ -371,18 +404,23 @@
 <!-- TAPE -->
 <div class="tape">
   <div class="tape-t">
-    <div class="tape-i">Video <span class="td-dot"></span></div><div class="tape-i">Renginiai <span class="td-dot"></span></div><div class="tape-i">Audio <span class="td-dot"></span></div><div class="tape-i">AI Sprendimai <span class="td-dot"></span></div><div class="tape-i">Vestuvės <span class="td-dot"></span></div><div class="tape-i">Podcast <span class="td-dot"></span></div><div class="tape-i">Reklama <span class="td-dot"></span></div><div class="tape-i">Pasakojimas <span class="td-dot"></span></div>
-    <div class="tape-i">Video <span class="td-dot"></span></div><div class="tape-i">Renginiai <span class="td-dot"></span></div><div class="tape-i">Audio <span class="td-dot"></span></div><div class="tape-i">AI Sprendimai <span class="td-dot"></span></div><div class="tape-i">Vestuvės <span class="td-dot"></span></div><div class="tape-i">Podcast <span class="td-dot"></span></div><div class="tape-i">Reklama <span class="td-dot"></span></div><div class="tape-i">Pasakojimas <span class="td-dot"></span></div>
+    <div class="tape-i hl">Video <span class="td-dot"></span></div><div class="tape-i">Renginiai <span class="td-dot"></span></div><div class="tape-i hli">Audio <span class="td-dot"></span></div><div class="tape-i hl">AI Sprendimai <span class="td-dot"></span></div><div class="tape-i">Vestuvės <span class="td-dot"></span></div><div class="tape-i hli">Podcast <span class="td-dot"></span></div><div class="tape-i">Reklama <span class="td-dot"></span></div><div class="tape-i hl">Pasakojimas <span class="td-dot"></span></div>
+    <div class="tape-i hl">Video <span class="td-dot"></span></div><div class="tape-i">Renginiai <span class="td-dot"></span></div><div class="tape-i hli">Audio <span class="td-dot"></span></div><div class="tape-i hl">AI Sprendimai <span class="td-dot"></span></div><div class="tape-i">Vestuvės <span class="td-dot"></span></div><div class="tape-i hli">Podcast <span class="td-dot"></span></div><div class="tape-i">Reklama <span class="td-dot"></span></div><div class="tape-i hl">Pasakojimas <span class="td-dot"></span></div>
   </div>
 </div>
 
 <!-- SERVICES (light) -->
 <section class="services" id="paslaugos">
-  <div class="sec-head rv">
-    <p class="sec-eye l">Paslaugos</p>
-    <h2 class="sec-title lt">Ką mes <em>kuriame</em></h2>
+  <div class="aurora-wrap">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
   </div>
-  <div class="svc-grid">
+  <div class="sec-head rv" style="position:relative;z-index:1">
+    <p class="sec-eye l">Paslaugos</p>
+    <h2 class="sec-title lt">Ką mes <em class="grad">kuriame</em></h2>
+  </div>
+  <div class="svc-grid" style="position:relative;z-index:1">
     <div class="svc rv"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">VIDEO / 01</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1576633587382-13ddf37b1fc1?w=600&auto=format&fit=crop&q=75" alt="Video" loading="lazy"><div class="svc-name">Video kūrimas</div><div class="svc-desc">Profesionalus filmavimas ir montažas. Korporatyviniai filmai, reklama, socialinė medija.</div><div class="svc-tags"><span class="stag">Filmavimas</span><span class="stag">Montažas</span><span class="stag">Animacija</span></div></div></div>
     <div class="svc rv d1"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">EVENTS / 02</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&auto=format&fit=crop&q=75" alt="Renginiai" loading="lazy"><div class="svc-name">Renginių organizavimas</div><div class="svc-desc">Vestuvės, įmonių vakarėliai, edukaciniai renginiai. Planuojame ir įgyvendiname.</div><div class="svc-tags"><span class="stag">Vestuvės</span><span class="stag">Korporatyviniai</span></div></div></div>
     <div class="svc rv d2"><div class="svc-fill"></div><div class="svc-in"><div class="svc-n">AUDIO / 03</div><img class="svc-thumb" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&auto=format&fit=crop&q=75" alt="Audio" loading="lazy"><div class="svc-name">Audio turinys</div><div class="svc-desc">Podcast serijos, reklaminiai jinglei, balso įrašai, garso dizainas.</div><div class="svc-tags"><span class="stag">Podcast</span><span class="stag">Voiceover</span></div></div></div>
@@ -436,7 +474,7 @@
   <p class="sec-eye l rv">Apie Abdera</p>
   <div class="about-g">
     <div class="abt rv">
-      <h2 class="sec-title lt">Istorijos prasideda<br><em>nuo klausimo</em></h2>
+      <h2 class="sec-title lt">Istorijos prasideda<br><em class="grad">nuo klausimo</em></h2>
       <p style="margin-top:28px">Abdera — <strong>kūrybinė produkcija su 11 metų patirtimi</strong> Lietuvoje. Nuo vestuvių filmavimo iki korporatyvinių renginių, nuo reklamos iki podcast serijų — kiekvienam projektui skiriame individualų dėmesį.</p>
       <p>Dabar su AI technologijomis žengėme dar vieną žingsnį — <strong>greičiau, tiksliau, moderniau</strong>.</p>
       <div class="dir-row">
@@ -456,7 +494,7 @@
 <!-- PORTFOLIO (dark) -->
 <section class="portfolio" id="projektai">
   <p class="sec-eye d rv">Portfolio</p>
-  <h2 class="sec-title dk rv">Mūsų <em>darbai</em></h2>
+  <h2 class="sec-title dk rv">Mūsų <em class="grad">darbai</em></h2>
   <div class="port-g">
     <div class="pi rv">
       <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&auto=format&fit=crop&q=80')"></div>
@@ -519,6 +557,54 @@
 </footer>
 
 <script>
+/* ── SCROLL PROGRESS ── */
+const progEl = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const pct = scrollY / (document.body.scrollHeight - innerHeight) * 100;
+  progEl.style.width = pct.toFixed(1) + '%';
+}, { passive: true });
+
+/* ── HERO PARTICLES ── */
+(function(){
+  const c = document.getElementById('hpc');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let pts = [];
+  function resize() { c.width = c.offsetWidth; c.height = c.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const cols = ['rgba(91,75,255,', 'rgba(255,77,106,', 'rgba(0,217,126,'];
+  for (let i = 0; i < 55; i++) {
+    pts.push({
+      x: Math.random() * 1500, y: Math.random() * 900,
+      r: Math.random() * 2 + 0.5,
+      vy: -(Math.random() * 0.4 + 0.15),
+      vx: (Math.random() - 0.5) * 0.2,
+      a: Math.random() * 0.6 + 0.2,
+      col: cols[Math.floor(Math.random() * cols.length)]
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    pts.forEach(p => {
+      p.y += p.vy; p.x += p.vx;
+      if (p.y < -10) { p.y = c.height + 10; p.x = Math.random() * c.width; }
+      ctx.beginPath();
+      ctx.arc(p.x % c.width, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.col + p.a + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── WORD REVEAL TIMING ── */
+document.querySelectorAll('.wrd span').forEach((el, i) => {
+  const parent = el.closest('.wrd');
+  const delay = parseFloat(parent?.style.getPropertyValue('--d') || '0');
+  el.style.animationDelay = (0.2 + delay) + 's';
+});
+
 /* ── NAV ── */
 const nav = document.getElementById('nav');
 const heroEl = document.querySelector('.hero');
