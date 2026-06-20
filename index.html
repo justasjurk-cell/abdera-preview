@@ -238,6 +238,13 @@
     .used-msg { text-align: center; padding: 40px 24px; color: var(--ink2); font-size: 15px; }
     .used-msg strong { color: var(--ink); display: block; margin-bottom: 8px; font-size: 18px; }
 
+    /* PARALLAX BG LETTERS */
+    .bg-ltr { position:absolute; font-family:var(--grotesk); font-weight:900; text-transform:uppercase; letter-spacing:-0.05em; pointer-events:none; z-index:0; will-change:transform; user-select:none; line-height:1; }
+    .bgl-svc  { font-size:clamp(120px,16vw,240px); color:rgba(91,75,255,0.055); bottom:-20px; right:-20px; }
+    .bgl-abt  { font-size:clamp(100px,14vw,200px); color:rgba(255,77,106,0.04); top:40px; left:-30px; }
+    .bgl-port { font-size:clamp(130px,18vw,260px); color:rgba(255,255,255,0.025); top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; }
+    .bgl-cta  { font-size:clamp(100px,15vw,220px); color:rgba(255,255,255,0.05); top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; }
+
     /* SVC CARD GLOW */
     .svc::after { content:''; position:absolute; inset:-1px; border-radius:0; background:conic-gradient(from var(--ang,0deg),var(--indigo),var(--coral),#7C4BFF,var(--indigo)); opacity:0; transition:opacity 0.3s; z-index:0; }
     .svc:hover::after { opacity:0.25; animation:borderSpin 3s linear infinite; }
@@ -412,10 +419,11 @@
 <!-- SERVICES (light) -->
 <section class="services" id="paslaugos">
   <div class="aurora-wrap">
-    <div class="orb orb-a"></div>
-    <div class="orb orb-b"></div>
-    <div class="orb orb-c"></div>
+    <div class="orb orb-a" data-par="0.14"></div>
+    <div class="orb orb-b" data-par="-0.09"></div>
+    <div class="orb orb-c" data-par="0.11"></div>
   </div>
+  <div class="bg-ltr bgl-svc" data-par="0.22">KŪRYBA</div>
   <div class="sec-head rv" style="position:relative;z-index:1">
     <p class="sec-eye l">Paslaugos</p>
     <h2 class="sec-title lt">Ką mes <em class="grad">kuriame</em></h2>
@@ -471,7 +479,8 @@
 
 <!-- ABOUT (cream) -->
 <section class="about" id="apie">
-  <p class="sec-eye l rv">Apie Abdera</p>
+  <div class="bg-ltr bgl-abt" data-par="-0.13">11</div>
+  <p class="sec-eye l rv" style="position:relative;z-index:1">Apie Abdera</p>
   <div class="about-g">
     <div class="abt rv">
       <h2 class="sec-title lt">Istorijos prasideda<br><em class="grad">nuo klausimo</em></h2>
@@ -492,10 +501,11 @@
 </section>
 
 <!-- PORTFOLIO (dark) -->
-<section class="portfolio" id="projektai">
-  <p class="sec-eye d rv">Portfolio</p>
-  <h2 class="sec-title dk rv">Mūsų <em class="grad">darbai</em></h2>
-  <div class="port-g">
+<section class="portfolio" id="projektai" style="position:relative;overflow:hidden">
+  <div class="bg-ltr bgl-port" data-par="0.18" style="z-index:0">PORTFOLIO</div>
+  <p class="sec-eye d rv" style="position:relative;z-index:1">Portfolio</p>
+  <h2 class="sec-title dk rv" style="position:relative;z-index:1">Mūsų <em class="grad">darbai</em></h2>
+  <div class="port-g" style="position:relative;z-index:1">
     <div class="pi rv">
       <div class="pi-img" style="background-image:url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&auto=format&fit=crop&q=80')"></div>
       <div class="pi-ov"><div class="pi-cat">Video produkcija</div><div class="pi-title">Korporatyviniai filmai ir reklaminės kampanijos</div></div>
@@ -557,11 +567,28 @@
 </footer>
 
 <script>
-/* ── SCROLL PROGRESS ── */
+/* ── SCROLL PROGRESS + PARALLAX ── */
 const progEl = document.getElementById('prog');
-window.addEventListener('scroll', () => {
-  const pct = scrollY / (document.body.scrollHeight - innerHeight) * 100;
+const parEls = [];
+document.querySelectorAll('[data-par]').forEach(el => {
+  parEls.push({ el, speed: parseFloat(el.dataset.par) });
+});
+
+let ticking = false;
+function onScroll() {
+  const y = scrollY;
+  const pct = y / (document.body.scrollHeight - innerHeight) * 100;
   progEl.style.width = pct.toFixed(1) + '%';
+
+  parEls.forEach(({ el, speed }) => {
+    const rect = el.parentElement.getBoundingClientRect();
+    const mid = rect.top + rect.height / 2 - innerHeight / 2;
+    el.style.transform = `translateY(${mid * speed}px)`;
+  });
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
 }, { passive: true });
 
 /* ── HERO PARTICLES ── */
