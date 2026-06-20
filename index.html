@@ -360,6 +360,61 @@
       footer { flex-direction: column; gap: 20px; text-align: center; }
       .f-links { flex-wrap: wrap; justify-content: center; }
     }
+
+    /* ── REEL BUTTON ─────────────────────────────────────────────── */
+    .btn-reel {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--grotesk); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); background: none; border: none; cursor: pointer;
+      padding: 0; transition: color 0.2s;
+    }
+    .btn-reel:hover { color: rgba(255,255,255,0.9); }
+    .btn-reel .rp {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .btn-reel:hover .rp {
+      border-color: rgba(91,75,255,0.6);
+      box-shadow: 0 0 18px rgba(91,75,255,0.35);
+    }
+    .btn-reel .rp::after {
+      content: ''; width: 0; height: 0;
+      border-style: solid; border-width: 6px 0 6px 11px;
+      border-color: transparent transparent transparent rgba(255,255,255,0.7);
+      margin-left: 2px;
+    }
+    .btn-reel:hover .rp::after { border-color: transparent transparent transparent white; }
+
+    /* ── REEL MODAL ───────────────────────────────────────────────── */
+    .reel-modal {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,10,15,0.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(.4,0,.2,1);
+      backdrop-filter: blur(8px);
+    }
+    .reel-modal.open { opacity: 1; pointer-events: all; }
+    .reel-modal video {
+      width: min(92vw, 1600px); max-height: 92vh;
+      border-radius: 4px;
+      box-shadow: 0 0 80px rgba(91,75,255,0.25), 0 40px 100px rgba(0,0,0,0.8);
+    }
+    .reel-close {
+      position: absolute; top: 28px; right: 36px;
+      color: rgba(255,255,255,0.4); font-size: 14px; font-weight: 400;
+      cursor: pointer; letter-spacing: 0.1em; font-family: var(--grotesk);
+      text-transform: uppercase; transition: color 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .reel-close:hover { color: white; }
+    .reel-close::before {
+      content: '×'; font-size: 24px; font-weight: 300; line-height: 1;
+    }
   </style>
 </head>
 <body>
@@ -391,6 +446,10 @@
     <div class="h-btns">
       <a href="#bandyk" class="btn-c">Išbandyti nemokamai ★</a>
       <a href="#paslaugos" class="btn-g">Paslaugos ↓</a>
+      <button class="btn-reel" onclick="openReel()">
+        <span class="rp"></span>
+        Žiūrėti reel
+      </button>
     </div>
     <div class="h-meta">
       <div class="hm"><span>Telefonas</span><strong>+370 618 05700</strong></div>
@@ -863,6 +922,30 @@ function onSub(e) {
   btn.textContent = '✓ Išsiųsta!';
   btn.style.background = '#059669'; btn.disabled = true;
 }
+
+// ── REEL MODAL ────────────────────────────────────────────────────
+function openReel() {
+  const m = document.getElementById('reelModal');
+  const v = document.getElementById('reelVideo');
+  m.classList.add('open');
+  v.currentTime = 0;
+  v.play();
+  document.body.style.overflow = 'hidden';
+}
+function closeReel() {
+  const m = document.getElementById('reelModal');
+  const v = document.getElementById('reelVideo');
+  m.classList.remove('open');
+  v.pause();
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReel(); });
 </script>
+
+<!-- REEL MODAL -->
+<div class="reel-modal" id="reelModal" onclick="if(event.target===this)closeReel()">
+  <div class="reel-close" onclick="closeReel()">Uždaryti</div>
+  <video id="reelVideo" src="abdera-logo-reveal-trimmed.mp4" preload="auto" playsinline></video>
+</div>
 </body>
 </html>
