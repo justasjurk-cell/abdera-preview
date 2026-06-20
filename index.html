@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -30,7 +31,7 @@
       --dm:      'DM Sans', sans-serif;
       --mono:    'Space Mono', monospace;
     }
-    html { scroll-behavior: smooth; }
+    /* html scroll-behavior handled by Lenis */
     body { font-family: var(--dm); background: var(--cream); color: var(--ink); overflow-x: hidden; line-height: 1.6; }
 
     /* NAV */
@@ -448,6 +449,145 @@
     @keyframes i-corner { to { opacity:1; } }
     body.intro-active { overflow: hidden; }
 
+    /* ── CUSTOM CURSOR ───────────────────────────────────────────── */
+    @media (pointer: fine) {
+      *, *::before, *::after { cursor: none !important; }
+      #cur-ring {
+        position: fixed; width: 34px; height: 34px;
+        border: 1px solid rgba(91,75,255,0.5); border-radius: 50%;
+        pointer-events: none; z-index: 9998; top: 0; left: 0;
+        transform: translate(-50%,-50%);
+        transition: width 0.28s cubic-bezier(.2,0,.2,1), height 0.28s cubic-bezier(.2,0,.2,1),
+                    border-color 0.25s, background 0.2s, opacity 0.2s;
+        will-change: transform; mix-blend-mode: normal;
+      }
+      #cur-dot {
+        position: fixed; width: 5px; height: 5px;
+        background: var(--indigo); border-radius: 50%;
+        pointer-events: none; z-index: 9999; top: 0; left: 0;
+        transform: translate(-50%,-50%);
+        transition: background 0.2s, transform 0.1s;
+        will-change: transform;
+      }
+      body.cur-hover #cur-ring { width: 56px; height: 56px; border-color: var(--coral); background: rgba(255,77,106,0.06); }
+      body.cur-hover #cur-dot { background: var(--coral); transform: translate(-50%,-50%) scale(0); }
+      body.cur-click #cur-ring { width: 22px; height: 22px; }
+      body.cur-dark #cur-ring { border-color: rgba(248,245,240,0.35); }
+      body.cur-dark #cur-dot { background: rgba(248,245,240,0.8); }
+    }
+
+    /* ── GRAIN OVERLAY ────────────────────────────────────────────── */
+    #grain {
+      position: fixed; inset: 0; z-index: 9985; pointer-events: none; opacity: 0.042;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── QUIZ SECTION ─────────────────────────────────────────────── */
+    .quiz-sec { background: var(--void); padding: 100px 48px; position: relative; overflow: hidden; }
+    .quiz-glow { position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 55% 80% at 15% 50%, rgba(91,75,255,0.13), transparent),
+                  radial-gradient(ellipse 45% 70% at 85% 50%, rgba(255,77,106,0.08), transparent); }
+    .quiz-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
+    .quiz-eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+    .quiz-title { font-family: var(--grotesk); font-size: clamp(30px,4.5vw,52px); font-weight: 700; color: var(--white); line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 12px; }
+    .quiz-title em { font-style: italic; font-weight: 300; }
+    .quiz-subtitle { font-size: 15px; color: rgba(255,255,255,0.38); margin-bottom: 44px; }
+    .quiz-prog { display: flex; gap: 6px; margin-bottom: 36px; }
+    .quiz-prog span { height: 2px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.1); transition: background 0.4s; }
+    .quiz-prog span.qp-done { background: rgba(91,75,255,0.7); }
+    .quiz-prog span.qp-active { background: var(--coral); }
+    .quiz-step { display: none; }
+    .quiz-step.active { display: block; animation: quiz-fadein 0.35s ease; }
+    @keyframes quiz-fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .quiz-q { font-family: var(--grotesk); font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 24px; }
+    .quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quiz-opt {
+      padding: 20px 22px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+      background: rgba(255,255,255,0.03); cursor: pointer; transition: all 0.22s;
+      display: flex; gap: 14px; align-items: flex-start; text-align: left;
+    }
+    .quiz-opt:hover { border-color: rgba(91,75,255,0.5); background: rgba(91,75,255,0.09); transform: translateY(-2px); }
+    .qo-ico { font-size: 22px; flex-shrink: 0; }
+    .qo-lbl { font-family: var(--grotesk); font-weight: 600; font-size: 14px; color: var(--white); margin-bottom: 4px; }
+    .qo-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.4; }
+    .quiz-result-box {
+      padding: 38px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      animation: quiz-fadein 0.4s ease;
+    }
+    .qr-tag { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--phosphor); margin-bottom: 14px; }
+    .qr-svc { font-family: var(--grotesk); font-size: 32px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .qr-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 22px; }
+    .qr-price { font-family: var(--mono); font-size: 12px; color: var(--coral); letter-spacing: 0.1em; margin-bottom: 28px; }
+    .qr-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .qr-btn { padding: 13px 26px; border-radius: 4px; font-family: var(--grotesk); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.15s; display: inline-block; }
+    .qr-btn.p { background: var(--coral); color: white; border: none; }
+    .qr-btn.s { background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+    .qr-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .quiz-restart { margin-top: 20px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); cursor: pointer; transition: color 0.2s; }
+    .quiz-restart:hover { color: rgba(255,255,255,0.6); }
+    @media (max-width: 600px) { .quiz-opts { grid-template-columns: 1fr; } }
+
+    /* ── AI CHAT WIDGET ───────────────────────────────────────────── */
+    #chat-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 8100;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo), #7C4BFF); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(91,75,255,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #chat-btn:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(91,75,255,0.55); }
+    #chat-btn svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+    .chat-pulse {
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(91,75,255,0.4);
+      animation: cpulse 2.2s ease infinite;
+    }
+    @keyframes cpulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.55);opacity:0} }
+    #chat-panel {
+      position: fixed; bottom: 98px; right: 28px; z-index: 8100;
+      width: 330px; max-height: 500px;
+      background: var(--white); border-radius: 16px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.16);
+      display: flex; flex-direction: column; overflow: hidden;
+      transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none;
+      transform-origin: bottom right;
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.22s;
+    }
+    #chat-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+    .chat-hd {
+      padding: 16px 18px;
+      background: linear-gradient(135deg, var(--indigo), #7C4BFF);
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .chat-av { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-family: var(--grotesk); font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
+    .chat-hd-txt .chat-hn { font-family: var(--grotesk); font-weight: 600; font-size: 13px; color: white; }
+    .chat-hd-txt .chat-hs { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 1px; display: flex; align-items: center; gap: 5px; }
+    .chat-hs::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--phosphor); flex-shrink:0; }
+    .chat-msgs { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+    .chat-msgs::-webkit-scrollbar { width: 4px; }
+    .chat-msgs::-webkit-scrollbar-thumb { background: var(--bd-l); border-radius: 2px; }
+    .cmsg { max-width: 85%; padding: 10px 13px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+    .cmsg.bot { background: var(--cream); color: var(--ink); border-bottom-left-radius: 3px; align-self: flex-start; }
+    .cmsg.usr { background: var(--indigo); color: white; border-bottom-right-radius: 3px; align-self: flex-end; }
+    .cmsg.typing { padding: 12px 16px; }
+    .typing-dots { display: flex; gap: 4px; }
+    .typing-dots span { width: 6px; height: 6px; background: var(--ink3); border-radius: 50%; animation: tdot 1s ease infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes tdot { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
+    .chat-opts { padding: 0 14px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .copt { padding: 6px 13px; border: 1px solid var(--bd-l); background: var(--white); border-radius: 20px; font-size: 12px; color: var(--ink2); cursor: pointer; transition: all 0.18s; }
+    .copt:hover { border-color: var(--indigo); color: var(--indigo); }
+    .chat-in-row { padding: 10px 14px; border-top: 1px solid var(--bd-l); display: flex; gap: 8px; flex-shrink: 0; }
+    .chat-in { flex: 1; padding: 8px 13px; background: var(--cream); border: 1px solid var(--bd-l); border-radius: 20px; font-family: var(--dm); font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
+    .chat-in:focus { border-color: var(--indigo); }
+    .chat-snd { width: 34px; height: 34px; background: var(--indigo); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.2s; }
+    .chat-snd:hover { opacity: 0.85; }
+    .chat-snd svg { width: 14px; height: 14px; fill: white; }
+
     /* ── REEL BUTTON ─────────────────────────────────────────────── */
     .btn-reel {
       display: inline-flex; align-items: center; gap: 10px;
@@ -506,6 +646,12 @@
 </head>
 <body class="intro-active">
 
+<!-- CURSOR -->
+<div id="cur-ring"></div>
+<div id="cur-dot"></div>
+<!-- GRAIN -->
+<div id="grain"></div>
+
 <!-- INTRO SCREEN -->
 <div id="intro">
   <canvas id="intro-canvas"></canvas>
@@ -536,6 +682,7 @@
   <ul class="nav-links">
     <li><a href="#paslaugos">Paslaugos</a></li>
     <li><a href="#bandyk">Išbandyti</a></li>
+    <li><a href="#quiz">AI Quiz</a></li>
     <li><a href="#apie">Apie</a></li>
   </ul>
   <a href="#kontaktai" class="nav-btn">Susisiekite</a>
@@ -656,6 +803,90 @@
   </div>
 </section>
 
+<!-- SERVICE RECOMMENDER QUIZ -->
+<section class="quiz-sec" id="quiz">
+  <div class="quiz-glow"></div>
+  <div class="quiz-inner">
+    <p class="quiz-eyebrow rv">AI Konsultantas</p>
+    <h2 class="quiz-title rv">Raskite <em class="grad">tinkamą</em><br>paslaugą per 30 sekundžių</h2>
+    <p class="quiz-subtitle rv d1">3 klausimai — asmeninis rekomendavimas</p>
+    <div class="quiz-prog" id="qprog">
+      <span class="qp-active"></span><span></span><span></span>
+    </div>
+    <!-- Step 1: Tipas -->
+    <div class="quiz-step active" id="qs1">
+      <p class="quiz-q">Ką norite sukurti?</p>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="qPick(1,'video')">
+          <span class="qo-ico">🎬</span>
+          <div><div class="qo-lbl">Video turinys</div><div class="qo-desc">Reklama, korporatyviniai filmai, socialinė medija</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(1,'events')">
+          <span class="qo-ico">🎭</span>
+          <div><div class="qo-lbl">Renginių organizavimas</div><div class="qo-desc">Konferencijos, vakarėliai, prezentacijos</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(1,'audio')">
+          <span class="qo-ico">🎙</span>
+          <div><div class="qo-lbl">Audio turinys</div><div class="qo-desc">Podcast, jinglei, voiceover, garso dizainas</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(1,'ai')">
+          <span class="qo-ico">🤖</span>
+          <div><div class="qo-lbl">AI automatizacija</div><div class="qo-desc">Chatbot, turinio kūrimas, procesų optimizavimas</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 2: Mastas -->
+    <div class="quiz-step" id="qs2">
+      <p class="quiz-q">Koks projekto mastas?</p>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="qPick(2,'small')">
+          <span class="qo-ico">⚡</span>
+          <div><div class="qo-lbl">Greitas startas</div><div class="qo-desc">Vienas projektas, biudžetas iki €500</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(2,'mid')">
+          <span class="qo-ico">🚀</span>
+          <div><div class="qo-lbl">Pilnas projektas</div><div class="qo-desc">Kompleksinis sprendimas, €500–€2000</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(2,'big')">
+          <span class="qo-ico">🏆</span>
+          <div><div class="qo-lbl">Ilgalaikis partnerys</div><div class="qo-desc">Nuolatinis bendradarbiavimas, €2000+/mėn</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(2,'consult')">
+          <span class="qo-ico">💡</span>
+          <div><div class="qo-lbl">Dar nežinau</div><div class="qo-desc">Noriu konsultacijos ir pasiūlymo</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3: Laikas -->
+    <div class="quiz-step" id="qs3">
+      <p class="quiz-q">Kada reikia pradėti?</p>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="qPick(3,'asap')">
+          <span class="qo-ico">🔥</span>
+          <div><div class="qo-lbl">Kuo greičiau</div><div class="qo-desc">Per 1–2 savaites</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(3,'month')">
+          <span class="qo-ico">📅</span>
+          <div><div class="qo-lbl">Per mėnesį</div><div class="qo-desc">Yra laiko planuoti</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(3,'quarter')">
+          <span class="qo-ico">🗓</span>
+          <div><div class="qo-lbl">Per ketvirtį</div><div class="qo-desc">Ruošiamės iš anksto</div></div>
+        </div>
+        <div class="quiz-opt" onclick="qPick(3,'explore')">
+          <span class="qo-ico">🔍</span>
+          <div><div class="qo-lbl">Tik tyrinėju</div><div class="qo-desc">Rinkuosi tiekėją ateičiai</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Result -->
+    <div class="quiz-step" id="qs-result">
+      <div class="quiz-result-box" id="qResult"></div>
+      <p class="quiz-restart" onclick="qRestart()">↺ Pradėti iš naujo</p>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT (cream) -->
 <section class="about" id="apie">
   <div class="bg-ltr bgl-abt" data-par="-0.13">11</div>
@@ -734,6 +965,91 @@
 </footer>
 
 <script>
+/* ── LENIS SMOOTH SCROLL ── */
+let lenis;
+if (typeof Lenis !== 'undefined') {
+  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+  function lenisRaf(t) { lenis.raf(t); requestAnimationFrame(lenisRaf); }
+  requestAnimationFrame(lenisRaf);
+  // anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -64, duration: 1.2 }); }
+    });
+  });
+}
+
+/* ── CUSTOM CURSOR ── */
+(function(){
+  const ring = document.getElementById('cur-ring');
+  const dot  = document.getElementById('cur-dot');
+  if (!ring || !matchMedia('(pointer: fine)').matches) return;
+  let rx = 0, ry = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => {
+    tx = e.clientX; ty = e.clientY;
+    dot.style.left = tx + 'px'; dot.style.top = ty + 'px';
+  });
+  (function curLoop() {
+    rx += (tx - rx) * 0.13;
+    ry += (ty - ry) * 0.13;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(curLoop);
+  })();
+  // hover states
+  document.querySelectorAll('a, button, .quiz-opt, .svc, .copt, .ttab, .nav-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+  });
+  document.addEventListener('mousedown', () => document.body.classList.add('cur-click'));
+  document.addEventListener('mouseup', () => document.body.classList.remove('cur-click'));
+  // dark section detection
+  const darkSecs = document.querySelectorAll('.hero, .quiz-sec, .cta-band, footer, #intro');
+  const curObs = new IntersectionObserver(entries => {
+    const anyDark = [...darkSecs].some(el => {
+      const r = el.getBoundingClientRect();
+      return r.top <= innerHeight/2 && r.bottom >= innerHeight/2;
+    });
+    document.body.classList.toggle('cur-dark', anyDark);
+  }, { threshold: [0, 0.5, 1] });
+  darkSecs.forEach(el => curObs.observe(el));
+  window.addEventListener('scroll', () => {
+    const anyDark = [...darkSecs].some(el => {
+      const r = el.getBoundingClientRect();
+      return r.top <= innerHeight/2 && r.bottom >= innerHeight/2;
+    });
+    document.body.classList.toggle('cur-dark', anyDark);
+  }, { passive: true });
+})();
+
+/* ── 3D CARD TILT ── */
+document.querySelectorAll('.svc').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg) translateZ(4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+/* ── MAGNETIC BUTTONS ── */
+document.querySelectorAll('.btn-c, .nav-btn, .csub, .trial-go').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width / 2) * 0.28;
+    const y = (e.clientY - r.top - r.height / 2) * 0.28;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+    btn.style.transition = 'transform 0.4s cubic-bezier(.2,0,.2,1)';
+    setTimeout(() => btn.style.transition = '', 400);
+  });
+});
+
 /* ── SCROLL PROGRESS + PARALLAX ── */
 const progEl = document.getElementById('prog');
 const parEls = [];
@@ -1087,6 +1403,125 @@ function onSub(e) {
   }, 5500);
 })();
 
+// ── QUIZ LOGIC ────────────────────────────────────────────────────
+const qAnswers = {};
+const qData = {
+  video: {
+    small: { svc:'Video Reklama', desc:'30–60 sekundžių reklaminė video reklama socialinei medijai ar svetainei. Greitas pristatymas, profesionalus rezultatas.', price:'Nuo €350 · pristatymas per 10 d.d.' },
+    mid:   { svc:'Korporatyvinis Filmas', desc:'Pilnas korporatyvinis filmas su scenarijumi, filmavimu ir montažu. Tinka svetainėms, pristatymiams, LinkedIn.', price:'Nuo €800 · pristatymas per 3 sav.' },
+    big:   { svc:'Nuolatinis Video Turinys', desc:'Mėnesinis video turinio paketas — reguliarios produkcijos su jūsų komanda. Socialinė medija, events, corporate.', price:'Nuo €1200/mėn.' },
+    consult:{ svc:'Video Konsultacija', desc:'Susitikiame, aptariame jūsų tikslus ir parenkame optimalų video sprendimą pagal biudžetą ir laiką.', price:'Nemokama konsultacija → pasiūlymas' }
+  },
+  events: {
+    small: { svc:'Mini Renginio Organizavimas', desc:'Iki 50 dalyvių renginys — komandos diena, prezentacija ar networking. Tvarkome logiką, jūs džiaugiatės.', price:'Nuo €490 · planuojame per 2 sav.' },
+    mid:   { svc:'Konferencija / Vakarėlis', desc:'50–200 dalyvių renginys su pilna produkcinė komanda — garso, šviesos, scenos, programos organizavimas.', price:'Nuo €1500 · planuojame per 4 sav.' },
+    big:   { svc:'Renginių Partneryste', desc:'Metiniai įmonių renginiai, sezonų kampanijos, strateginis renginių planas. Esame jūsų renginių departamentas.', price:'Nuo €2500/renginys ar €800/mėn.' },
+    consult:{ svc:'Renginių Konsultacija', desc:'Aptarsime jūsų renginių poreikius, formatus ir biudžetą. Paruošime konceptą ir kainų pasiūlymą.', price:'Nemokama konsultacija' }
+  },
+  audio: {
+    small: { svc:'Podcast Epizodas', desc:'Vieno podcast epizodo įrašas, montažas, garso valymas ir mastering. Tinka YouTube, Spotify, Apple Podcasts.', price:'Nuo €220 · pristatymas per 5 d.d.' },
+    mid:   { svc:'Podcast Serija', desc:'5–10 epizodų podcast serija su intro/outro dizainu, vizualine identika ir publikavimo strategija.', price:'Nuo €990 · pilnas paketas' },
+    big:   { svc:'Nuolatinis Audio Turinys', desc:'Mėnesinis audio produkcijos paketas — podcast, jinglei, voiceover kampanijoms. Reguliari produkciją.', price:'Nuo €650/mėn.' },
+    consult:{ svc:'Audio Konsultacija', desc:'Aptarsime jūsų audio turinio poreikius ir parenkame optimalų formatą bei produkciją.', price:'Nemokama konsultacija' }
+  },
+  ai: {
+    small: { svc:'AI Turinio Paketas', desc:'Vienkartinis AI turinio kūrimas — 20 socialinės medijos įrašų, el. laiškų serija ar reklaminiai tekstai per 48h.', price:'Nuo €249 · pristatymas per 48h' },
+    mid:   { svc:'AI Pokalbių Botas', desc:'Klientų aptarnavimo arba lead generation chatbot jūsų svetainei. Integravimas, apmokymas, paleidimas per 5 d.d.', price:'Nuo €790 · pilnas sprendimas' },
+    big:   { svc:'AI Automatizavimo Paketas', desc:'Pilnas verslo procesų automatizavimas — turinys, komunikacija, CRM, ataskaitos. Nuolatinė AI partnerystė.', price:'Nuo €1800 · individualus projektas' },
+    consult:{ svc:'AI Galimybių Auditas', desc:'Išanalizuosime jūsų verslo procesus ir parodysime kur AI sutaupo laiko ir pinigų. Konkrečios rekomendacijos.', price:'Nemokamas auditas' }
+  }
+};
+
+function qPick(step, val) {
+  qAnswers[step] = val;
+  const prog = document.querySelectorAll('#qprog span');
+  if (step < 3) {
+    document.getElementById('qs' + step).classList.remove('active');
+    document.getElementById('qs' + (step + 1)).classList.add('active');
+    prog.forEach((s, i) => {
+      s.className = i < step ? 'qp-done' : (i === step ? 'qp-active' : '');
+    });
+  } else {
+    document.getElementById('qs3').classList.remove('active');
+    document.getElementById('qs-result').classList.add('active');
+    prog.forEach(s => s.className = 'qp-done');
+    qShowResult();
+  }
+}
+function qShowResult() {
+  const type = qAnswers[1] || 'ai';
+  const size = qAnswers[2] || 'mid';
+  const d = (qData[type] && qData[type][size]) || qData.ai.mid;
+  document.getElementById('qResult').innerHTML =
+    `<div class="qr-tag">✓ Rekomenduojame</div>
+     <div class="qr-svc">${d.svc}</div>
+     <div class="qr-desc">${d.desc}</div>
+     <div class="qr-price">${d.price}</div>
+     <div class="qr-btns">
+       <a class="qr-btn p" href="#kontaktai">Susisiekti →</a>
+       <button class="qr-btn s" onclick="qRestart()">Bandyti kitą</button>
+     </div>`;
+}
+function qRestart() {
+  qAnswers[1] = qAnswers[2] = qAnswers[3] = undefined;
+  ['qs1','qs2','qs3','qs-result'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', i === 0);
+  });
+  document.querySelectorAll('#qprog span').forEach((s, i) => {
+    s.className = i === 0 ? 'qp-active' : '';
+  });
+  document.getElementById('qResult').innerHTML = '';
+}
+
+// ── CHAT LOGIC ────────────────────────────────────────────────────
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-panel').classList.toggle('open', chatOpen);
+}
+const chatKB = [
+  { k: ['kaina','kiek','euro','biudžet','cost','price'], r: 'Mūsų paslaugų kainos:\n\n🎬 Video reklama — nuo €350\n🎭 Renginiai — nuo €490\n🎙 Audio/Podcast — nuo €220\n🤖 AI sprendimai — nuo €249\n\nKiekvienas projektas individualus — susisiekite ir paruošime tikslų pasiūlymą.' },
+  { k: ['video','filmas','reklam','reel'], r: 'Kuriame profesionalius video:\n\n🎬 Reklaminiai filmukai (30–90 sek.)\n📹 Korporatyviniai filmai\n📱 Socialinės medijos video\n🎞 Event video\n\nVidutinis pristatymas: 10–14 d.d. Nuo €350. Norėtumėte sužinoti daugiau?' },
+  { k: ['ai','dirbtini','automatiz','chatbot','botas'], r: 'Mūsų AI sprendimai:\n\n🤖 Pokalbių botai svetainei\n✍ Automatinis turinio kūrimas\n📊 Procesų automatizavimas\n📧 AI el. laiškų kampanijos\n\nPristatome per 48–120h. Nuo €249. Susidomėjote konkrečiu sprendimu?' },
+  { k: ['renginy','event','konferenc','vakarėl'], r: 'Organizuojame renginius:\n\n🎭 Konferencijos (50–500 dalyvių)\n🎉 Įmonių vakarėliai\n📚 Edukaciniai renginiai\n🤝 Networking eventos\n\nDirbame visoje Lietuvoje. Nuo €490. Kokio tipo renginį planuojate?' },
+  { k: ['audio','podcast','garso','jingel','voiceover'], r: 'Mūsų audio produkcija:\n\n🎙 Podcast serijos\n🎵 Reklaminiai jinglei\n🎤 Voiceover (LT/EN)\n🔊 Garso dizainas\n\nStudio kokybė, greitas pristatymas. Nuo €220.' },
+  { k: ['kontakt','telefon','adresas','email','susisiek'], r: 'Susisiekite su mumis:\n\n📞 +370 618 05700\n✉ info@abdera.lt\n📍 Taikos pr. 88A, Kaunas\n⏰ Pirmad.–Penktad. 9–18h\n\nArba naudokite kontaktų formą apačioje →' },
+  { k: ['kiek laiko','pristatym','deadline','terminas','greita'], r: 'Orientaciniai terminai:\n\n⚡ AI turinys — 48h\n🎬 Video reklama — 10 d.d.\n🎙 Podcast — 5 d.d.\n🎭 Renginys — nuo 2 sav.\n🤖 Chatbot — 5 d.d.\n\nSkubus projektas? Susisiekite — randame sprendimą.' },
+  { k: ['nemokama','bandyt','trial','testuot'], r: 'Išbandykite mūsų AI turinio kūrimą nemokamai! 🆓\n\nSukurkite reklamą, socialinės medijos postą ar video scenarijų per 30 sekundžių — jokios registracijos.\n\nSpauskite "Išbandyti nemokamai" viršuje.' },
+];
+function cGetReply(msg) {
+  const m = msg.toLowerCase();
+  for (const { k, r } of chatKB) {
+    if (k.some(w => m.includes(w))) return r;
+  }
+  return 'Dėkui už klausimą! Mūsų specialistai atsakys per 24h.\n\n📞 +370 618 05700\n✉ info@abdera.lt\n\nArba palikite žinutę kontaktų formoje apačioje — susisieksime šiandien.';
+}
+function cAddMsg(txt, cls) {
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + cls;
+  d.textContent = txt;
+  const msgs = document.getElementById('chatMsgs');
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+function cSend(preset) {
+  const input = document.getElementById('chatInput');
+  const txt = preset || input.value.trim();
+  if (!txt) return;
+  input.value = '';
+  document.getElementById('chatOpts').style.display = 'none';
+  cAddMsg(txt, 'usr');
+  // typing indicator
+  const typing = cAddMsg('', 'bot typing');
+  typing.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  setTimeout(() => {
+    typing.remove();
+    cAddMsg(cGetReply(txt), 'bot');
+  }, 900 + Math.random() * 600);
+}
+
 // ── REEL MODAL ────────────────────────────────────────────────────
 function openReel() {
   const m = document.getElementById('reelModal');
@@ -1105,6 +1540,36 @@ function closeReel() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReel(); });
 </script>
+
+<!-- AI CHAT WIDGET -->
+<button id="chat-btn" onclick="toggleChat()" aria-label="Abdera AI asistentas">
+  <span class="chat-pulse"></span>
+  <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+</button>
+<div id="chat-panel">
+  <div class="chat-hd">
+    <div class="chat-av">A</div>
+    <div class="chat-hd-txt">
+      <div class="chat-hn">Abdera AI</div>
+      <div class="chat-hs">Aktyvus dabar</div>
+    </div>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="cmsg bot">Sveiki! 👋 Esu Abdera AI asistentas. Kuo galiu padėti šiandien?</div>
+  </div>
+  <div class="chat-opts" id="chatOpts">
+    <button class="copt" onclick="cSend('Kiek kainuoja video kūrimas?')">💰 Kainos</button>
+    <button class="copt" onclick="cSend('Noriu video reklamos')">🎬 Video</button>
+    <button class="copt" onclick="cSend('Domina AI sprendimai')">🤖 AI</button>
+    <button class="copt" onclick="cSend('Kaip susisiekti?')">📞 Kontaktai</button>
+  </div>
+  <div class="chat-in-row">
+    <input class="chat-in" id="chatInput" placeholder="Rašykite..." onkeydown="if(event.key==='Enter')cSend()">
+    <button class="chat-snd" onclick="cSend()">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+    </button>
+  </div>
+</div>
 
 <!-- REEL MODAL -->
 <div class="reel-modal" id="reelModal" onclick="if(event.target===this)closeReel()">
