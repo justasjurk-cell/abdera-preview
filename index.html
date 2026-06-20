@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abdera — Kūrybinė Produkcija & AI | Kaunas</title>
+  <meta name="description" content="Abdera — video kūrimas, renginių organizavimas, audio produkcija ir AI sprendimai. Kaunas, Lietuva. +370 618 05700">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #FFFFFF;
+      --off:     #F5F3F0;
+      --off2:    #EDEAE6;
+      --ink:     #0E0E0F;
+      --ink2:    #4A4A50;
+      --ink3:    #9A9AA0;
+      --signal:  #C84B2F;
+      --sig-dim: #FAF0EE;
+      --border:  #E4E1DC;
+      --serif:   'Syne', sans-serif;
+      --sans:    'Instrument Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 200;
+      height: 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.line { border-color: var(--border); }
+    .logo {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .logo em { color: var(--signal); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink2);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--signal); }
+    .nav-btn {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      background: var(--signal);
+      padding: 10px 22px;
+      border-radius: 3px;
+      transition: opacity 0.15s;
+    }
+    .nav-btn:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      padding: 120px 48px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 36px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+    }
+    .eyebrow-dot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .eyebrow-dot::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--signal);
+      border-radius: 50%;
+      animation: blink 2.2s ease infinite;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(60px, 8.5vw, 128px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .hero h1 .alt {
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+    .hero h1 .sig { color: var(--signal); }
+    .hero-desc {
+      margin-top: 36px;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--ink2);
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 44px;
+    }
+    .btn-main {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      background: var(--ink);
+      padding: 16px 32px;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+    .btn-main:hover { background: var(--signal); }
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--ink2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s;
+    }
+    .btn-ghost::after { content: '↓'; font-size: 16px; }
+    .btn-ghost:hover { color: var(--signal); }
+    .hero-meta {
+      margin-top: 64px;
+      display: flex;
+      gap: 40px;
+    }
+    .hero-meta span {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+    .hero-meta strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* ── WAVEFORM (signature element) ── */
+    .waveform-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .waveform-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--signal);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .waveform-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--signal);
+      border-radius: 50%;
+      animation: blink 1.5s ease infinite;
+    }
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 120px;
+    }
+    .waveform-bar {
+      flex: 1;
+      background: var(--signal);
+      border-radius: 2px;
+      animation: wave var(--dur, 1.2s) ease-in-out infinite alternate;
+      opacity: var(--op, 0.7);
+    }
+    .waveform-services {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ws-item {
+      padding: 14px 18px;
+      background: var(--off);
+      border-left: 3px solid transparent;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink2);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .ws-item:hover {
+      background: var(--sig-dim);
+      border-color: var(--signal);
+      color: var(--ink);
+    }
+
+    /* ── SCROLL TAPE ── */
+    .tape {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      background: var(--off);
+    }
+    .tape-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 25s linear infinite;
+    }
+    .tape-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 0 32px;
+      white-space: nowrap;
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+    .tape-sig {
+      font-size: 8px;
+      color: var(--signal);
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-left h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .about-left h2 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--signal);
+      text-transform: none;
+    }
+    .about-left p {
+      margin-top: 28px;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--ink2);
+    }
+    .about-left p strong { color: var(--ink); font-weight: 600; }
+    .director-row {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .dir-init {
+      width: 44px; height: 44px;
+      background: var(--sig-dim);
+      border: 1px solid rgba(200,75,47,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--signal);
+      flex-shrink: 0;
+    }
+    .dir-name { font-weight: 600; font-size: 14px; }
+    .dir-role { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+    .about-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .stat {
+      background: var(--off);
+      padding: 36px 30px;
+      border: 1px solid var(--border);
+    }
+    .stat:hover { background: var(--sig-dim); border-color: rgba(200,75,47,0.2); }
+    .stat-n {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink3);
+      margin-top: 8px;
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 0 48px 120px; }
+    .sec-head { margin-bottom: 52px; }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--signal);
+    }
+    .sec-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1.0;
+    }
+    .sec-title em { font-style: italic; font-weight: 400; color: var(--signal); text-transform: none; }
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .svc {
+      background: var(--white);
+      padding: 40px 32px;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .svc::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--signal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .svc:hover { background: var(--off); }
+    .svc:hover::after { transform: scaleX(1); }
+    .svc-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .svc-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .svc-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ink2);
+    }
+    .svc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--ink3);
+      border-radius: 2px;
+    }
+
+    /* ── AI SECTION ── */
+    .ai-section {
+      background: var(--off);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 120px 48px;
+    }
+    .ai-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 60px;
+    }
+    .ai-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--sig-dim);
+      border: 1px solid rgba(200,75,47,0.25);
+      color: var(--signal);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+    .ai-live-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--signal);
+      border-radius: 50%;
+      animation: blink 1.5s ease infinite;
+    }
+    .ai-features { display: flex; flex-direction: column; gap: 0; margin-top: 36px; }
+    .ai-feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ai-feat:last-child { border-bottom: none; }
+    .ai-feat-ico {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      width: 36px;
+      height: 36px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ai-feat-txt strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .ai-feat-txt span { font-size: 13px; color: var(--ink2); }
+
+    /* CHAT — light theme */
+    .chat-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .chat-top {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--off);
+    }
+    .chat-ava {
+      width: 34px; height: 34px;
+      background: var(--signal);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .chat-top-info strong { display: block; font-size: 13px; font-weight: 600; }
+    .chat-top-info span { font-size: 11px; color: var(--ink3); }
+    .live-dot {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #16a34a;
+      font-weight: 500;
+    }
+    .live-dot::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #16a34a;
+      border-radius: 50%;
+    }
+    .chat-msgs {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .chat-msgs::-webkit-scrollbar { width: 4px; }
+    .chat-msgs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .cmsg { display: flex; gap: 8px; max-width: 88%; }
+    .cmsg.u { align-self: flex-end; flex-direction: row-reverse; }
+    .cbub {
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-radius: 10px;
+    }
+    .cmsg.b .cbub {
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 3px;
+      color: var(--ink);
+    }
+    .cmsg.u .cbub {
+      background: var(--signal);
+      color: #fff;
+      border-bottom-right-radius: 3px;
+    }
+    .cico {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--sig-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .chat-inp-row {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+    .chat-inp {
+      flex: 1;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .chat-inp:focus { border-color: rgba(200,75,47,0.4); }
+    .chat-inp::placeholder { color: var(--ink3); }
+    .chat-go {
+      background: var(--signal);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: opacity 0.15s;
+    }
+    .chat-go:hover { opacity: 0.85; }
+    .typing { display: flex; gap: 4px; padding: 10px 14px; }
+    .td {
+      width: 6px; height: 6px;
+      background: var(--ink3);
+      border-radius: 50%;
+      animation: typebounce 1.2s ease infinite;
+    }
+    .td:nth-child(2) { animation-delay: .2s; }
+    .td:nth-child(3) { animation-delay: .4s; }
+
+    /* ── PORTFOLIO ── */
+    .portfolio { padding: 120px 48px; background: var(--white); }
+    .port-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+      margin-top: 52px;
+      background: var(--border);
+    }
+    .port-item {
+      background: var(--off);
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .port-item:first-child { grid-row: span 2; aspect-ratio: auto; }
+    .port-bg {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+      opacity: 0.15;
+      transition: transform 0.4s, opacity 0.3s;
+    }
+    .port-item:hover .port-bg { transform: scale(1.08); opacity: 0.22; }
+    .port-over {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 22px;
+      background: linear-gradient(to top, rgba(14,14,15,0.85) 0%, transparent 100%);
+    }
+    .port-cat {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 5px;
+    }
+    .port-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    /* ── PROCESS ── */
+    .process {
+      padding: 120px 48px;
+      background: var(--off);
+      border-top: 1px solid var(--border);
+    }
+    .proc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .proc-step {
+      background: var(--off);
+      padding: 40px 30px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .proc-step:hover { background: var(--white); }
+    .proc-arrow {
+      position: absolute;
+      right: -12px; top: 40px;
+      z-index: 1;
+      font-size: 14px;
+      color: var(--ink3);
+      background: var(--border);
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+    }
+    .proc-step:last-child .proc-arrow { display: none; }
+    .proc-n {
+      font-family: var(--serif);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--signal);
+      margin-bottom: 18px;
+    }
+    .proc-t { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .proc-d { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 120px 48px;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .contact .eyebrow { color: var(--signal); }
+    .contact .sec-title { color: var(--white); }
+    .contact .sec-title em { color: var(--signal); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      margin-top: 60px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+    .cinfo-item label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 7px;
+    }
+    .cinfo-item a, .cinfo-item p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.15s;
+    }
+    .cinfo-item a:hover { color: var(--signal); }
+    .cinfo-meta {
+      margin-top: 16px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.7;
+    }
+    .cform { display: flex; flex-direction: column; gap: 16px; }
+    .crow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cfield { display: flex; flex-direction: column; gap: 7px; }
+    .cfield label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .cfield input, .cfield textarea, .cfield select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 13px 16px;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .cfield input:focus, .cfield textarea:focus, .cfield select:focus {
+      border-color: rgba(200,75,47,0.5);
+    }
+    .cfield input::placeholder, .cfield textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .cfield textarea { resize: vertical; min-height: 110px; }
+    .cfield select option { background: #1a1a1a; }
+    .csubmit {
+      align-self: flex-start;
+      background: var(--signal);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 15px 36px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .csubmit:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .foot-logo {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .foot-logo em { color: var(--signal); font-style: normal; }
+    .foot-links { display: flex; gap: 28px; list-style: none; }
+    .foot-links a {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .foot-links a:hover { color: rgba(255,255,255,0.7); }
+    .foot-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; }
+    .reveal.d2 { transition-delay: 0.2s; }
+    .reveal.d3 { transition-delay: 0.3s; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+    @keyframes wave {
+      from { transform: scaleY(var(--min,0.15)); }
+      to   { transform: scaleY(var(--max,1)); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes typebounce {
+      0%,60%,100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .waveform-wrap { display: none; }
+      .svc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .about, .services, .ai-section, .portfolio, .process, .contact { padding-left: 24px; padding-right: 24px; }
+      .about { grid-template-columns: 1fr; gap: 48px; }
+      .ai-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .port-grid { grid-template-columns: 1fr; }
+      .port-item:first-child { grid-row: span 1; aspect-ratio: 4/3; }
+      .proc-grid { grid-template-columns: 1fr; }
+      .proc-arrow { display: none; }
+      .crow { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .foot-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">ABD<em>E</em>RA</a>
+  <ul class="nav-links">
+    <li><a href="#apie">Apie</a></li>
+    <li><a href="#paslaugos">Paslaugos</a></li>
+    <li><a href="#ai">AI</a></li>
+    <li><a href="#projektai">Projektai</a></li>
+  </ul>
+  <a href="#kontaktai" class="nav-btn">Susisiekite</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      Kaunas · Lietuva · Est. 2014
+    </div>
+    <h1>
+      <div>Kuriam</div>
+      <div class="alt">Turinį</div>
+      <div class="sig">Gyvą.</div>
+    </h1>
+    <p class="hero-desc">
+      Kūrybinė produkcija su 11 metų patirtimi — video, renginiai, audio ir pasakojimas. Dabar su AI technologijomis.
+    </p>
+    <div class="hero-actions">
+      <a href="#kontaktai" class="btn-main">Pradėti projektą</a>
+      <a href="#paslaugos" class="btn-ghost">Paslaugos</a>
+    </div>
+    <div class="hero-meta">
+      <div>
+        <span>Telefonas</span>
+        <strong>+370 618 05700</strong>
+      </div>
+      <div>
+        <span>El. paštas</span>
+        <strong>info@abdera.lt</strong>
+      </div>
+      <div>
+        <span>Miestas</span>
+        <strong>Kaunas</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="waveform-wrap">
+    <div class="waveform-label">Live production</div>
+    <div class="waveform" id="wf"></div>
+    <div class="waveform-services">
+      <div class="ws-item">🎬 Video kūrimas</div>
+      <div class="ws-item">🎭 Renginių organizavimas</div>
+      <div class="ws-item">🎙 Audio produkcija</div>
+      <div class="ws-item">🤖 AI sprendimai</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAPE -->
+<div class="tape">
+  <div class="tape-track">
+    <div class="tape-item">Video <span class="tape-sig">●</span></div>
+    <div class="tape-item">Renginiai <span class="tape-sig">●</span></div>
+    <div class="tape-item">Audio <span class="tape-sig">●</span></div>
+    <div class="tape-item">Pasakojimas <span class="tape-sig">●</span></div>
+    <div class="tape-item">AI sprendimai <span class="tape-sig">●</span></div>
+    <div class="tape-item">Reklama <span class="tape-sig">●</span></div>
+    <div class="tape-item">Vestuvės <span class="tape-sig">●</span></div>
+    <div class="tape-item">Podcast <span class="tape-sig">●</span></div>
+    <div class="tape-item">Video <span class="tape-sig">●</span></div>
+    <div class="tape-item">Renginiai <span class="tape-sig">●</span></div>
+    <div class="tape-item">Audio <span class="tape-sig">●</span></div>
+    <div class="tape-item">Pasakojimas <span class="tape-sig">●</span></div>
+    <div class="tape-item">AI sprendimai <span class="tape-sig">●</span></div>
+    <div class="tape-item">Reklama <span class="tape-sig">●</span></div>
+    <div class="tape-item">Vestuvės <span class="tape-sig">●</span></div>
+    <div class="tape-item">Podcast <span class="tape-sig">●</span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="apie">
+  <div class="about-left reveal">
+    <h2>Geras turinys<br><em>prasideda</em><br>nuo klausimo</h2>
+    <p>Abdera — <strong>kūrybinė produkcija Kaune</strong> su 11 metų patirtimi. Nuo vestuvių filmavimo iki korporatyvinių renginių, nuo reklamos iki podcast serijų — kiekvienam projektui skiriame individualų dėmesį.</p>
+    <p>Dabar žengėme dar vieną žingsnį — <strong>AI technologijos</strong> leidžia mums dirbti greičiau, tiksliau ir suteikia klientams naujų galimybių.</p>
+    <div class="director-row">
+      <div class="dir-init">J</div>
+      <div>
+        <div class="dir-name">Justas Jurkevičius</div>
+        <div class="dir-role">Direktorius · Abdera, UAB · Įm. k. 303489407</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right reveal d2">
+    <div class="stat"><div class="stat-n">11+</div><div class="stat-l">Metų patirties</div></div>
+    <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Projektų</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Paslaugų sritys</div></div>
+    <div class="stat"><div class="stat-n">AI</div><div class="stat-l">Nauja kryptis</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="paslaugos">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Paslaugos</div>
+    <h2 class="sec-title">Ką mes <em>kuriame</em></h2>
+  </div>
+  <div class="svc-grid">
+    <div class="svc reveal">
+      <div class="svc-icon">🎬</div>
+      <div class="svc-name">Video kūrimas</div>
+      <div class="svc-desc">Profesionalus filmavimas ir montažas nuo koncepcijos iki galutinio produkto. Korporatyviniai filmai, reklama, socialinė medija.</div>
+      <div class="svc-tags"><span class="tag">Filmavimas</span><span class="tag">Montažas</span><span class="tag">Animacija</span></div>
+    </div>
+    <div class="svc reveal d1">
+      <div class="svc-icon">🎭</div>
+      <div class="svc-name">Renginių organizavimas</div>
+      <div class="svc-desc">Vestuvės, įmonių vakarėliai, edukaciniai renginiai. Planuojame ir įgyvendiname — jūs tiesiog mėgaujatės.</div>
+      <div class="svc-tags"><span class="tag">Vestuvės</span><span class="tag">Korporatyviniai</span><span class="tag">Kultūriniai</span></div>
+    </div>
+    <div class="svc reveal d2">
+      <div class="svc-icon">🎙</div>
+      <div class="svc-name">Audio turinys</div>
+      <div class="svc-desc">Podcast serijos, reklaminiai jinglei, balso įrašai, garso dizainas. Profesionali kokybė bet kurioje platformoje.</div>
+      <div class="svc-tags"><span class="tag">Podcast</span><span class="tag">Voiceover</span><span class="tag">Mixing</span></div>
+    </div>
+    <div class="svc reveal d3">
+      <div class="svc-icon">✍</div>
+      <div class="svc-name">Kūrybinis pasakojimas</div>
+      <div class="svc-desc">Reklaminiai tekstai, socialinė medija, maketavimas, spaudos darbai. Žodžiai, kurie pasakoja jūsų istoriją.</div>
+      <div class="svc-tags"><span class="tag">Copywriting</span><span class="tag">Maketavimas</span><span class="tag">Reklama</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section class="ai-section" id="ai">
+  <div class="eyebrow reveal">AI sprendimai</div>
+  <h2 class="sec-title reveal">Kūryba +<br><em>dirbtinis intelektas</em></h2>
+  <div class="ai-grid">
+    <div class="reveal">
+      <div class="ai-live-badge">Nauja paslauga</div>
+      <p style="font-size:16px; line-height:1.8; color:var(--ink2); font-weight:400">
+        Pirmoji kūrybinė agentūra Kaune, integruojanti AI į kiekvieną projekto etapą. <strong style="color:var(--ink)">Greičiau ir tiksliau</strong> — neprarandant kūrybiškumo.
+      </p>
+      <div class="ai-features">
+        <div class="ai-feat">
+          <div class="ai-feat-ico">🤖</div>
+          <div class="ai-feat-txt">
+            <strong>AI pokalbių botas svetainei</strong>
+            <span>Atsako į klausimus 24/7, rezervuoja susitikimus, didina konversijas</span>
+          </div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-feat-ico">🎬</div>
+          <div class="ai-feat-txt">
+            <strong>AI scenarijų ir tekstų kūrimas</strong>
+            <span>Video scenarijai, reklaminiai tekstai, socialinė medija — per minutes</span>
+          </div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-feat-ico">📊</div>
+          <div class="ai-feat-txt">
+            <strong>Automatizuotas turinio planavimas</strong>
+            <span>Kas mėnesį — paruoštas socialinių tinklų planas, pritaikytas jūsų verslui</span>
+          </div>
+        </div>
+        <div class="ai-feat">
+          <div class="ai-feat-ico">⚡</div>
+          <div class="ai-feat-txt">
+            <strong>Diegimas per 24h nuo €249</strong>
+            <span>Setup, konfigūracija ir palaikymas — be ilgų sutarčių</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-box reveal d2">
+      <div class="chat-top">
+        <div class="chat-ava">🤖</div>
+        <div class="chat-top-info">
+          <strong>Abdera AI</strong>
+          <span>Pokalbių asistentas · Demo</span>
+        </div>
+        <div class="live-dot">Aktyvus</div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="cmsg b">
+          <div class="cico">🤖</div>
+          <div class="cbub">Sveiki! Esu Abdera AI. Galiu atsakyti apie mūsų paslaugas ar padėti pradėti projektą. Kuo galiu padėti?</div>
+        </div>
+      </div>
+      <div class="chat-inp-row">
+        <input type="text" class="chat-inp" id="chatIn" placeholder="Užduokite klausimą..." autocomplete="off">
+        <button class="chat-go" onclick="doChat()">&#10148;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="projektai">
+  <div class="eyebrow reveal">Portfolio</div>
+  <h2 class="sec-title reveal">Mūsų <em>darbai</em></h2>
+  <div class="port-grid">
+    <div class="port-item reveal">
+      <div class="port-bg">🎬</div>
+      <div class="port-over"><div class="port-cat">Video produkcija</div><div class="port-title">Korporatyviniai filmai ir reklaminiai klipai</div></div>
+    </div>
+    <div class="port-item reveal d1">
+      <div class="port-bg">💍</div>
+      <div class="port-over"><div class="port-cat">Renginiai</div><div class="port-title">Vestuvių filmavimas</div></div>
+    </div>
+    <div class="port-item reveal d2">
+      <div class="port-bg">🏢</div>
+      <div class="port-over"><div class="port-cat">Renginiai</div><div class="port-title">Įmonių vakarėliai</div></div>
+    </div>
+    <div class="port-item reveal d1">
+      <div class="port-bg">🎙</div>
+      <div class="port-over"><div class="port-cat">Audio</div><div class="port-title">Podcast serijos</div></div>
+    </div>
+    <div class="port-item reveal d2">
+      <div class="port-bg">📱</div>
+      <div class="port-over"><div class="port-cat">Socialinė medija</div><div class="port-title">Skaitmeninė reklama</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="eyebrow reveal">Procesas</div>
+  <h2 class="sec-title reveal">Kaip <em>dirbame</em></h2>
+  <div class="proc-grid">
+    <div class="proc-step reveal">
+      <div class="proc-arrow">→</div>
+      <div class="proc-n">01 — Klausomės</div>
+      <div class="proc-t">Suprantame jūsų tikslus</div>
+      <div class="proc-d">Kiekvienas projektas prasideda nuo klausimų, ne nuo atsakymų. Gilinamės į jūsų verslą ir auditoriją.</div>
+    </div>
+    <div class="proc-step reveal d1">
+      <div class="proc-arrow">→</div>
+      <div class="proc-n">02 — Planuojame</div>
+      <div class="proc-t">Koncepcija ir planas</div>
+      <div class="proc-d">Detalus projekto planas: koncepcija, terminai, biudžetas. Jūs visada žinote kas vyksta.</div>
+    </div>
+    <div class="proc-step reveal d2">
+      <div class="proc-arrow">→</div>
+      <div class="proc-n">03 — Kuriame</div>
+      <div class="proc-t">Gamyba be kompromisų</div>
+      <div class="proc-d">Filmavimas, montažas, garso kūrimas, tekstai. Kokybė pirmiausia — visada.</div>
+    </div>
+    <div class="proc-step reveal d3">
+      <div class="proc-n">04 — Pristatome</div>
+      <div class="proc-t">Rezultatas laiku</div>
+      <div class="proc-d">Galutinis produktas viršija lūkesčius. Augame ir tobulėjame kartu su klientais.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="kontaktai">
+  <div class="eyebrow">Kontaktai</div>
+  <h2 class="sec-title">Pradėkime<br><em>kartu</em></h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="cinfo-item"><label>Telefonas</label><a href="tel:+37061805700">+370 618 05700</a></div>
+      <div class="cinfo-item"><label>El. paštas</label><a href="mailto:info@abdera.lt">info@abdera.lt</a></div>
+      <div class="cinfo-item"><label>Adresas</label><p>Taikos pr. 88A<br>Kaunas, Lietuva</p></div>
+      <div class="cinfo-item"><label>Darbo laikas</label><p>Pirmadieniais–penktadieniais<br>9:00 – 18:00</p></div>
+      <div class="cinfo-meta">Abdera, UAB · Įm. k. 303489407<br>Taikos pr. 88A, Kaunas</div>
+    </div>
+    <form class="cform reveal d2" onsubmit="onSubmit(event)">
+      <div class="crow">
+        <div class="cfield"><label>Vardas *</label><input type="text" placeholder="Jūsų vardas" required></div>
+        <div class="cfield"><label>El. paštas *</label><input type="email" placeholder="el@pastas.lt" required></div>
+      </div>
+      <div class="cfield">
+        <label>Paslauga</label>
+        <select>
+          <option value="">Pasirinkite...</option>
+          <option>Video kūrimas</option>
+          <option>Renginių organizavimas</option>
+          <option>Audio turinys</option>
+          <option>Kūrybinis pasakojimas</option>
+          <option>AI pokalbių botas</option>
+          <option>Kita</option>
+        </select>
+      </div>
+      <div class="cfield"><label>Žinutė *</label><textarea placeholder="Papasakokite apie projektą..." required></textarea></div>
+      <button type="submit" class="csubmit">Siųsti &#8594;</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">ABD<em>E</em>RA</div>
+  <ul class="foot-links">
+    <li><a href="#apie">Apie</a></li>
+    <li><a href="#paslaugos">Paslaugos</a></li>
+    <li><a href="#ai">AI</a></li>
+    <li><a href="#projektai">Projektai</a></li>
+    <li><a href="#kontaktai">Kontaktai</a></li>
+  </ul>
+  <div class="foot-copy">© 2026 Abdera, UAB</div>
+</footer>
+
+<script>
+  // Nav border
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('line', scrollY > 40);
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Animated waveform bars
+  (function buildWaveform() {
+    const wf = document.getElementById('wf');
+    if (!wf) return;
+    const bars = 48;
+    const heights = [];
+    for (let i = 0; i < bars; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'waveform-bar';
+      const min = 0.08 + Math.random() * 0.15;
+      const max = 0.35 + Math.random() * 0.65;
+      const dur = 0.8 + Math.random() * 1.4;
+      bar.style.cssText = `--min:${min};--max:${max};--dur:${dur}s;animation-delay:${Math.random()*1.5}s`;
+      wf.appendChild(bar);
+    }
+  })();
+
+  // Chatbot
+  const R = {
+    video: 'Filmuojame korporatyvinius filmus, reklamines kampanijas, renginių apžvalgas ir socialinės medijos turinį. Visas procesas nuo scenarijaus iki galutinio produkto. Norėtumėte sužinoti apie kainas?',
+    kaina: 'Kainos priklauso nuo projekto apimties: video nuo €300, renginiai nuo €500, AI boto diegimas €249 + €79/mėn. Parašykite info@abdera.lt — paruošime individualų pasiūlymą.',
+    rengini: '11 metų organizuojame vestuvės, įmonių vakarėlius, edukacinius renginius, kultūrinius projektus. Rūpinamės visais detaliais — jūs tiesiog mėgaujatės.',
+    ai: 'AI pokalbių botas jūsų svetainei — atsako į klausimus 24/7, rezervuoja susitikimus. Diegiame per 24h nuo €249. Pirmoji tokia paslauga Kaune. Domina demo?',
+    audio: 'Podcast serijos, reklaminiai jinglei, balso įrašai, garso dizainas. Profesionali kokybė su moderna įranga.',
+    kontakt: '📞 +370 618 05700 | ✉️ info@abdera.lt | 📍 Taikos pr. 88A, Kaunas. Darbo laikas: Pirmadieniais–penktadieniais 9–18.',
+    def: 'Dėkojame už klausimą! Susisiekite: info@abdera.lt arba +370 618 05700. Atsakysime per 1 darbo dieną.'
+  };
+
+  function getResp(t) {
+    t = t.toLowerCase();
+    if (/video|filmuot|klip/.test(t)) return R.video;
+    if (/kain|kiek|€|eur/.test(t)) return R.kaina;
+    if (/rengini|vestuvė|vakarėl|švent/.test(t)) return R.rengini;
+    if (/ai|bot|chatbot|dirbt/.test(t)) return R.ai;
+    if (/audio|podcast|gars/.test(t)) return R.audio;
+    if (/kontakt|adresas|telefon|pašt/.test(t)) return R.kontakt;
+    return R.def;
+  }
+
+  function addMsg(txt, role) {
+    const c = document.getElementById('chatMsgs');
+    const d = document.createElement('div');
+    d.className = 'cmsg ' + (role === 'bot' ? 'b' : 'u');
+    d.innerHTML = role === 'bot'
+      ? '<div class="cico">🤖</div><div class="cbub">' + txt + '</div>'
+      : '<div class="cbub">' + txt + '</div>';
+    c.appendChild(d);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function doChat() {
+    const inp = document.getElementById('chatIn');
+    const txt = inp.value.trim();
+    if (!txt) return;
+    inp.value = '';
+    addMsg(txt, 'u');
+    const c = document.getElementById('chatMsgs');
+    const t = document.createElement('div');
+    t.className = 'cmsg b'; t.id = 'typ';
+    t.innerHTML = '<div class="cico">🤖</div><div class="cbub"><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+    c.appendChild(t); c.scrollTop = c.scrollHeight;
+    setTimeout(() => {
+      const el = document.getElementById('typ'); if (el) el.remove();
+      addMsg(getResp(txt), 'bot');
+    }, 800 + Math.random() * 500);
+  }
+
+  document.getElementById('chatIn').addEventListener('keydown', e => { if (e.key === 'Enter') doChat(); });
+
+  function onSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.csubmit');
+    btn.textContent = '✓ Išsiųsta!';
+    btn.style.background = '#16a34a';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
